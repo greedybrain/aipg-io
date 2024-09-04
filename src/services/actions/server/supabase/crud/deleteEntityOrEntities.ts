@@ -6,7 +6,7 @@ import {
     TMaybeEntity,
     TTable,
     TTableRow,
-} from "../../../../../types";
+} from "@/types";
 
 import { EntityService } from "../../../../../models/supabase/entity-service";
 import { getErrorMessage } from "../../../../../utils/status-messages/get-error-message";

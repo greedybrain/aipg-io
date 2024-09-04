@@ -1,9 +1,9 @@
 "use server";
 
-import { TAuthActionResponse, TAuthResetCtx } from "../../../../../types";
+import { TAuthActionResponse, TAuthResetCtx } from "@/types";
 
-import { AuthService } from "../../../../../models/supabase/auth-service";
-import { getErrorMessage } from "../../../../../utils/status-messages/get-error-message";
+import { AuthService } from "@/models/supabase/auth-service";
+import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
 export const beginResetPassword = async (
     resetCtx: TAuthResetCtx,

@@ -4,10 +4,10 @@ import {
     SignInWithPasswordCredentials,
     SignUpWithPasswordCredentials,
 } from "@supabase/supabase-js";
-import { TAuthActionResponse, TAuthFlow } from "../../../../../types";
+import { TAuthActionResponse, TAuthFlow } from "@/types";
 
-import { AuthService } from "../../../../../models/supabase/auth-service";
-import { getErrorMessage } from "../../../../../utils/status-messages/get-error-message";
+import { AuthService } from "@/models/supabase/auth-service";
+import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
 export const authenticate = async (
     authFlow: TAuthFlow,

@@ -1,4 +1,4 @@
-import { TOAuthOption } from "../../../../types";
+import { TOAuthOption } from "@/types";
 
 export const oauthList: TOAuthOption[] = [
     // {
@@ -21,31 +21,31 @@ export const oauthList: TOAuthOption[] = [
     //     providerLower: "discord",
     //     icon: "",
     // },
-    // {
-    //     provider: "Facebook",
-    //     providerLower: "facebook",
-    //     icon: "",
-    // },
+    {
+        provider: "Facebook",
+        providerLower: "facebook",
+        icon: "",
+    },
     // {
     //     provider: "Figma",
     //     providerLower: "figma",
     //     icon: "",
     // },
-    // {
-    //     provider: "Github",
-    //     providerLower: "github",
-    //     icon: "",
-    // },
+    {
+        provider: "Github",
+        providerLower: "github",
+        icon: "",
+    },
     // {
     //     provider: "GitLab",
     //     providerLower: "gitlab",
     //     icon: "",
     // },
-    // {
-    //     provider: "Google",
-    //     providerLower: "google",
-    //     icon: "",
-    // },
+    {
+        provider: "Google",
+        providerLower: "google",
+        icon: "",
+    },
     // {
     //     provider: "Kakao",
     //     providerLower: "kakao",

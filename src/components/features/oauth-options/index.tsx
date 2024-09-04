@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 
 import OAuthOption from "./oauth-option";
-import { TOAuthOption } from "../../../types";
+import { TOAuthOption } from "@/types";
 import { oauthList } from "./data/oauth-list";
 
 const OAuthOptions = () => {

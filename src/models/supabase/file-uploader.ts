@@ -1,8 +1,8 @@
-import { Database } from "../../../database.types";
+import { Database } from "@/types/database.types";
 import { SupabaseClient } from "@supabase/supabase-js";
-import { TUploadFileOrFilesParams } from "../../types";
-import { getErrorMessage } from "../../utils/status-messages/get-error-message";
-import { storageErrorMessages } from "../../utils/status-messages/error-codes-and-messages/storage-error-messages";
+import { TUploadFileOrFilesParams } from "@/types";
+import { getErrorMessage } from "@/utils/status-messages/get-error-message";
+import { storageErrorMessages } from "@/utils/status-messages/error-codes-and-messages/storage-error-messages";
 
 class FileUploader {
     constructor(

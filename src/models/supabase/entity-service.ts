@@ -11,12 +11,12 @@ import {
     TTables,
     TUpdateEntityArgs,
     TUpsertEntityArgs,
-} from "../../types";
+} from "@/types";
 
 import { PostgrestError } from "@supabase/supabase-js";
-import { createClient } from "../../utils/supabase/server";
-import { getEntitySuccessMessage } from "../../utils/status-messages/get-entity-success-message";
-import { getErrorMessage } from "../../utils/status-messages/get-error-message";
+import { createClient } from "@/utils/supabase/server";
+import { getEntitySuccessMessage } from "@/utils/status-messages/get-entity-success-message";
+import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
 export class EntityService {
     private supabase;

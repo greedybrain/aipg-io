@@ -3,16 +3,15 @@ import {
     AuthResponse,
     AuthTokenResponsePassword,
     Provider,
-    SignInWithOAuthCredentials,
     SignInWithPasswordCredentials,
     SignInWithPasswordlessCredentials,
     SignUpWithPasswordCredentials,
 } from "@supabase/supabase-js";
-import { TAuthActionResponse, TAuthFlow, TAuthResetCtx } from "../../types";
+import { TAuthActionResponse, TAuthFlow, TAuthResetCtx } from "@/types";
 
-import { authErrorMessages } from "../../utils/status-messages/error-codes-and-messages/auth-error-messages";
-import { createClient } from "../../utils/supabase/server";
-import { getErrorMessage } from "../../utils/status-messages/get-error-message";
+import { authErrorMessages } from "@/utils/status-messages/error-codes-and-messages/auth-error-messages";
+import { createClient } from "@/utils/supabase/server";
+import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 import { headers } from "next/headers";
 
 export class AuthService {

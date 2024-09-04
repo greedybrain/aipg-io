@@ -1,8 +1,8 @@
 "use server";
 
-import { AuthService } from "../../../../../models/supabase/auth-service";
+import { AuthService } from "@/models/supabase/auth-service";
 import { Provider } from "@supabase/supabase-js";
-import { getErrorMessage } from "../../../../../utils/status-messages/get-error-message";
+import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
 export const oauth = async (provider: Provider) => {
     try {

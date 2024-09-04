@@ -1,8 +1,8 @@
 "use server";
 
-import { AuthService } from "../../../../../models/supabase/auth-service";
-import { TAuthActionResponse } from "../../../../../types";
-import { getErrorMessage } from "../../../../../utils/status-messages/get-error-message";
+import { AuthService } from "@/models/supabase/auth-service";
+import { TAuthActionResponse } from "@/types";
+import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
 export const logout = async (): Promise<TAuthActionResponse> => {
     try {

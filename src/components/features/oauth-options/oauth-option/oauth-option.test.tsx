@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 
 import OAuthOption from ".";
-import { TOAuthOption } from "../../../../types";
+import { TOAuthOption } from "@/types";
 
 describe("OAuthOption", () => {
     it("should render no oauth with button that displays provider name followed by 'sign in'", () => {

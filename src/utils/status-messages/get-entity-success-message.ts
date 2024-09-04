@@ -1,4 +1,4 @@
-import { TSuccessMessageArgs, TTable } from "../../types";
+import { TSuccessMessageArgs, TTable } from "@/types";
 
 const messageGenerators: Record<
     TSuccessMessageArgs["messageType"],

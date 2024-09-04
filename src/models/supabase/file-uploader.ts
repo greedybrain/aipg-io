@@ -1,4 +1,4 @@
-import { Database } from "../../database.types";
+import { Database } from "../../../database.types";
 import { SupabaseClient } from "@supabase/supabase-js";
 import { TUploadFileOrFilesParams } from "../../types";
 import { getErrorMessage } from "../../utils/status-messages/get-error-message";

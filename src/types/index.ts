@@ -1,6 +1,6 @@
 import { Provider, SupabaseClient, User } from "@supabase/supabase-js";
 
-import { Database } from "../database.types";
+import { Database } from "../../database.types";
 
 // SUPABASE TYPES
 export type TTables = Database["public"]["Tables"];

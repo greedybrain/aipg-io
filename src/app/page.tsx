@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/utils/tailwind/tw-merge";
 
 export default async function Home() {
     return (

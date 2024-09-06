@@ -1,8 +1,3 @@
-/* 
-    Add barrel exports for schemas:
-    
-    export * from '../entity-schema-1';
-    export * from '../entity-schema-2';
-*/
-
-export {};
+export * from "./Users";
+export * from "./Profiles";
+export * from "./Notes";

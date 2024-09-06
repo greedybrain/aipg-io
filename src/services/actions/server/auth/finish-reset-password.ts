@@ -2,7 +2,7 @@
 
 import { TAuthActionResponse, TAuthResetCtx } from "@/types";
 
-import { AuthService } from "@/models/supabase/auth-service";
+import { AuthService } from "@/models/auth-service";
 import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
 export const finishResetPassword = async (

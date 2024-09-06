@@ -9,80 +9,103 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      notes: {
+      Notes: {
         Row: {
-          content: string | null
-          created_at: string
+          content: string
+          createdAt: string | null
           id: string
-          sideNote: string | null
-          title: string | null
-          updated_at: string | null
+          title: string
+          updatedAt: string | null
+          userId: string
         }
         Insert: {
-          content?: string | null
-          created_at?: string
+          content?: string
+          createdAt?: string | null
           id?: string
-          sideNote?: string | null
-          title?: string | null
-          updated_at?: string | null
+          title?: string
+          updatedAt?: string | null
+          userId: string
         }
         Update: {
-          content?: string | null
-          created_at?: string
+          content?: string
+          createdAt?: string | null
           id?: string
-          sideNote?: string | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      saves: {
-        Row: {
-          created_at: string
-          id: number
-          note_id: string | null
-        }
-        Insert: {
-          created_at?: string
-          id?: number
-          note_id?: string | null
-        }
-        Update: {
-          created_at?: string
-          id?: number
-          note_id?: string | null
+          title?: string
+          updatedAt?: string | null
+          userId?: string
         }
         Relationships: [
           {
-            foreignKeyName: "Saves_note_id_fkey"
-            columns: ["note_id"]
+            foreignKeyName: "Notes_userId_Users_id_fk"
+            columns: ["userId"]
             isOneToOne: false
-            referencedRelation: "notes"
+            referencedRelation: "Users"
             referencedColumns: ["id"]
           },
         ]
       }
-      users: {
+      Profiles: {
         Row: {
-          created_at: string
-          email: string | null
-          id: number
-          updated_at: string | null
-          username: string | null
+          bio: string
+          createdAt: string | null
+          id: string
+          title: string
+          updatedAt: string | null
+          userId: string | null
+          username: string
         }
         Insert: {
-          created_at?: string
-          email?: string | null
-          id?: number
-          updated_at?: string | null
-          username?: string | null
+          bio?: string
+          createdAt?: string | null
+          id?: string
+          title?: string
+          updatedAt?: string | null
+          userId?: string | null
+          username?: string
         }
         Update: {
-          created_at?: string
-          email?: string | null
-          id?: number
-          updated_at?: string | null
-          username?: string | null
+          bio?: string
+          createdAt?: string | null
+          id?: string
+          title?: string
+          updatedAt?: string | null
+          userId?: string | null
+          username?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Profiles_userId_Users_id_fk"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "Users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      Users: {
+        Row: {
+          createdAt: string | null
+          email: string
+          id: string
+          name: string
+          role: Database["public"]["Enums"]["role"] | null
+          updatedAt: string | null
+        }
+        Insert: {
+          createdAt?: string | null
+          email?: string
+          id?: string
+          name?: string
+          role?: Database["public"]["Enums"]["role"] | null
+          updatedAt?: string | null
+        }
+        Update: {
+          createdAt?: string | null
+          email?: string
+          id?: string
+          name?: string
+          role?: Database["public"]["Enums"]["role"] | null
+          updatedAt?: string | null
         }
         Relationships: []
       }
@@ -94,7 +117,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      role: "DEFAULT" | "ADMIN" | "OWNER"
     }
     CompositeTypes: {
       [_ in never]: never

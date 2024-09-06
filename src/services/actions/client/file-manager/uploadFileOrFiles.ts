@@ -1,4 +1,4 @@
-import FileUploader from "@/models/supabase/file-uploader";
+import FileUploader from "@/models/file-uploader";
 import { TUploadFileOrFilesParams } from "@/types";
 import { createClient } from "@/utils/supabase/client";
 import { getErrorMessage } from "@/utils/status-messages/get-error-message";

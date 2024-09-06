@@ -1,5 +1,5 @@
 import { TOAuthOption } from "@/types";
-import { oauth } from "@/services/actions/server/supabase/auth/oauth";
+import { oauth } from "@/services/actions/server/auth/oauth";
 import { redirect } from "next/navigation";
 
 const OAuthOption = (option: TOAuthOption) => {

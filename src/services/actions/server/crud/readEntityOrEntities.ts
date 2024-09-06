@@ -1,29 +1,29 @@
 "use server";
 
-import {
-    TDeleteEntityArgs,
+import type {
     TEntityActionResponse,
     TMaybeEntity,
+    TReadEntityArgs,
     TTable,
     TTableRow,
 } from "@/types";
 
-import { EntityService } from "../../../../../models/supabase/entity-service";
-import { getErrorMessage } from "../../../../../utils/status-messages/get-error-message";
+import { EntityService } from "@/models/entity-service";
+import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
-export const deleteEntityOrEntities = async <T extends TTable>({
+export const readEntityOrEntities = async <T extends TTable>({
     relation,
     entityIds,
     entityName,
     selectCriteria,
-}: TDeleteEntityArgs<T>): Promise<
+}: TReadEntityArgs<T>): Promise<
     TEntityActionResponse<
         TMaybeEntity<TTableRow<T>> | TMaybeEntity<TTableRow<T>[]>
     >
 > => {
     try {
         const entityService = new EntityService();
-        return await entityService.deleteEntityOrEntities({
+        return await entityService.readEntityOrEntities({
             relation,
             entityIds,
             entityName,

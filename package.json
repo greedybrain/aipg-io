@@ -8,7 +8,12 @@
         "start": "next start",
         "lint": "next lint",
         "test": "vitest",
-        "test:ui": "vitest --ui"
+        "test:ui": "vitest --ui",
+        "db:generate": "drizzle-kit generate",
+        "db:migrate": "drizzle-kit migrate",
+        "db:push": "drizzle-kit push",
+        "db:studio": "npx drizzle-kit studio",
+        "db:seed": "npx ts-node src/db/seed"
     },
     "dependencies": {
         "@eslint/config-array": "^0.18.0",

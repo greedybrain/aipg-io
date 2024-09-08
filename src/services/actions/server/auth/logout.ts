@@ -1,6 +1,6 @@
 "use server";
 
-import { AuthService } from "@/models/auth-service";
+import { AuthService } from "../models/auth-service";
 import { TAuthActionResponse } from "@/types";
 import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 

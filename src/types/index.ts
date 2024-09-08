@@ -1,6 +1,7 @@
 import { Provider, SupabaseClient, User } from "@supabase/supabase-js";
 
 import { Database } from "@/types/database.types";
+import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
 
 // SUPABASE
 export type TTables = Database["public"]["Tables"];
@@ -8,6 +9,13 @@ export type TTable = keyof TTables;
 export type TTableRow<T extends TTable> = TTables[T]["Row"];
 export type TTableUpdate<T extends TTable> = TTables[T]["Update"];
 export type TTableInsert<T extends TTable> = TTables[T]["Insert"];
+export type TFilterBuilder<T extends TTable> = PostgrestFilterBuilder<
+    Database["public"],
+    TTableRow<T>,
+    TTableRow<T>,
+    T,
+    TTables[T]["Relationships"]
+>;
 
 // CUSTOM RESPONSES
 export type TAuthActionResponse = {
@@ -35,7 +43,6 @@ export type TSuccessMessageType =
 export type TSuccessMessageArgs = {
     messageType: TSuccessMessageType;
     relation?: TTable;
-    entityName?: string;
 };
 
 // AUTH
@@ -63,7 +70,6 @@ export type TSelectCriteria = {
 };
 export type TBaseEntity<T extends TTable> = {
     relation: T;
-    entityName?: string;
     entityId?: string;
     selectCriteria?: TSelectCriteria;
 };
@@ -76,7 +82,6 @@ export type TDeleteEntityArgs<T extends TTable> = TBaseEntity<T> & {
 export type TMaybeEntity<TEntity> = TEntity | null | undefined;
 export type TReadEntityArgs<T extends TTable> = TBaseEntity<T> & {
     entityIds?: string[];
-    entityName?: string;
 };
 export type TUpdateEntityArgs<T extends TTable> = TBaseEntity<T> & {
     formData: TTables[T]["Update"];

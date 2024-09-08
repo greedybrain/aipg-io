@@ -6,7 +6,7 @@ import {
 } from "@supabase/supabase-js";
 import { TAuthActionResponse, TAuthFlow } from "@/types";
 
-import { AuthService } from "@/models/auth-service";
+import { AuthService } from "../models/auth-service";
 import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
 export const authenticate = async (

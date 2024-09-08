@@ -1,48 +1,49 @@
-import { TSuccessMessageArgs, TTable } from "@/types";
+import { TSuccessMessageArgs } from "@/types";
+import pluralize from "pluralize";
 
 const messageGenerators: Record<
     TSuccessMessageArgs["messageType"],
     (args: TSuccessMessageArgs) => string
 > = {
-    readOne: ({ entityName }) =>
-        entityName
-            ? `${entityName} retrieved successfully!`
+    readOne: ({ relation }) =>
+        relation
+            ? `${pluralize.singular(relation)} retrieved successfully!`
             : "Entity retrieved successfully!",
     readMany: ({ relation }) =>
         relation
-            ? `${relation} retrieved successfully!`
+            ? `${pluralize.plural(relation)} retrieved successfully!`
             : "Entities retrieved successfully!",
     readAll: ({ relation }) =>
         relation
-            ? `${relation} retrieved successfully!`
+            ? `${pluralize.plural(relation)} retrieved successfully!`
             : "Entities retrieved successfully!",
-    createOne: ({ entityName }) =>
-        entityName
-            ? `${entityName} created successfully!`
+    createOne: ({ relation }) =>
+        relation
+            ? `${pluralize.singular(relation)} created successfully!`
             : "Entity created successfully!",
     createMany: ({ relation }) =>
         relation
-            ? `${relation} created successfully!`
+            ? `${pluralize.plural(relation)} created successfully!`
             : "Entities created successfully!",
-    updateOne: ({ entityName }) =>
-        entityName
-            ? `${entityName} upserted successfully!`
+    updateOne: ({ relation }) =>
+        relation
+            ? `${pluralize.singular(relation)} upserted successfully!`
             : "Entity upserted successfully!",
-    upsertOne: ({ entityName }) =>
-        entityName
-            ? `${entityName} upserted successfully!`
+    upsertOne: ({ relation }) =>
+        relation
+            ? `${pluralize.singular(relation)} upserted successfully!`
             : "Entity upserted successfully!",
     upsertMany: ({ relation }) =>
         relation
-            ? `${relation} upserted successfully!`
+            ? `${pluralize.plural(relation)} upserted successfully!`
             : "Entities upserted successfully!",
-    deleteOne: ({ entityName }) =>
-        entityName
-            ? `${entityName} deleted successfully!`
+    deleteOne: ({ relation }) =>
+        relation
+            ? `${pluralize.singular(relation)} deleted successfully!`
             : "Entity deleted successfully!",
     deleteMany: ({ relation }) =>
         relation
-            ? `${relation} deleted successfully!`
+            ? `${pluralize.plural(relation)} deleted successfully!`
             : "Entities deleted successfully!",
 };
 

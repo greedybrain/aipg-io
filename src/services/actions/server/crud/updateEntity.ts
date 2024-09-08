@@ -8,13 +8,12 @@ import {
     TUpdateEntityArgs,
 } from "@/types";
 
-import { EntityService } from "@/models/entity-service";
+import { EntityService } from "../models/entity-service";
 import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
 export const updateEntity = async <T extends TTable>({
     relation,
     entityId,
-    entityName,
     formData,
     selectCriteria,
 }: TUpdateEntityArgs<T>): Promise<
@@ -22,10 +21,9 @@ export const updateEntity = async <T extends TTable>({
 > => {
     try {
         const entityService = new EntityService();
-        return await entityService.updateEntity({
+        return await entityService.updateEntity<T>({
             relation,
             entityId,
-            entityName,
             formData,
             selectCriteria,
         });

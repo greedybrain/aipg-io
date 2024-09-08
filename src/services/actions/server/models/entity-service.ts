@@ -27,7 +27,7 @@ export class EntityService {
 
     async createEntityOrEntities<T extends TTable>({
         relation,
-        entityName,
+
         formData,
         selectCriteria,
     }: TCreateEntityArgs<T>): Promise<
@@ -44,13 +44,11 @@ export class EntityService {
             const isMultiple = Array.isArray(formData);
 
             if (isMultiple) {
-                // Handle multiple insertions
                 ({ data, error } = await this.supabase
                     .from<TTable, TTables[TTable]>(relation)
                     .insert<TTableInsert<T>>(formData)
                     .select(selectCriteria?.columns ?? "*"));
             } else {
-                // Handle a single insertion
                 ({ data, error } = await this.supabase
                     .from<TTable, TTables[TTable]>(relation)
                     .insert<TTableInsert<T>>(formData)
@@ -64,7 +62,7 @@ export class EntityService {
                 success: true,
                 message: getEntitySuccessMessage({
                     relation,
-                    entityName,
+
                     messageType: isMultiple ? "createMany" : "createOne",
                 }),
                 data,
@@ -81,7 +79,7 @@ export class EntityService {
     async deleteEntityOrEntities<T extends TTable>({
         relation,
         entityIds,
-        entityName,
+
         selectCriteria,
     }: TDeleteEntityArgs<T>): Promise<
         TEntityActionResponse<
@@ -124,7 +122,7 @@ export class EntityService {
                 success: true,
                 message: getEntitySuccessMessage({
                     relation,
-                    entityName,
+
                     messageType: isMultiple ? "deleteMany" : "deleteOne",
                 }),
                 data,
@@ -141,7 +139,7 @@ export class EntityService {
     async readEntityOrEntities<T extends TTable>({
         relation,
         entityIds,
-        entityName,
+
         selectCriteria,
     }: TReadEntityArgs<T>): Promise<
         TEntityActionResponse<
@@ -157,12 +155,10 @@ export class EntityService {
                 error: PostgrestError | null;
 
             if (!entityIds || entityIds.length === 0) {
-                // Handle reading all entities
                 ({ data, error } = await supabase
                     .from<TTable, TTables[TTable]>(relation)
                     .select(selectCriteria?.columns, selectCriteria?.options));
             } else if (entityIds.length > 1) {
-                // Handle multiple reads
                 ({ data, error } = (await supabase
                     .from<TTable, TTables[TTable]>(relation)
                     .select(selectCriteria?.columns, selectCriteria?.options)
@@ -171,7 +167,6 @@ export class EntityService {
                     error: PostgrestError | null;
                 });
             } else {
-                // Handle a single read
                 ({ data, error } = await supabase
                     .from<TTable, TTables[TTable]>(relation)
                     .select(selectCriteria?.columns, selectCriteria?.options)
@@ -185,7 +180,7 @@ export class EntityService {
                 success: true,
                 message: getEntitySuccessMessage({
                     relation,
-                    entityName,
+
                     messageType:
                         !entityIds || entityIds.length === 0
                             ? "readAll"
@@ -207,7 +202,7 @@ export class EntityService {
     async updateEntity<T extends TTable>({
         relation,
         entityId,
-        entityName,
+
         formData,
         selectCriteria,
     }: TUpdateEntityArgs<T>): Promise<
@@ -231,7 +226,6 @@ export class EntityService {
                 success: true,
                 message: getEntitySuccessMessage({
                     messageType: "updateOne",
-                    entityName,
                 }),
                 data,
             };
@@ -249,7 +243,6 @@ export class EntityService {
         formData,
         selectCriteria,
         onConflictColumns,
-        entityName,
     }: TUpsertEntityArgs<T>): Promise<
         TEntityActionResponse<
             TMaybeEntity<TTableRow<T>> | TMaybeEntity<TTableRow<T>[]>
@@ -288,7 +281,7 @@ export class EntityService {
                 success: true,
                 message: getEntitySuccessMessage({
                     relation,
-                    entityName,
+
                     messageType: isMultiple ? "upsertMany" : "upsertOne",
                 }),
                 data,

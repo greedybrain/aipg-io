@@ -8,12 +8,11 @@ import {
     TTableRow,
 } from "@/types";
 
-import { EntityService } from "@/models/entity-service";
+import { EntityService } from "../models/entity-service";
 import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
 export const createEntityOrEntities = async <T extends TTable>({
     relation,
-    entityName,
     formData,
     selectCriteria,
 }: TCreateEntityArgs<T>): Promise<
@@ -23,9 +22,8 @@ export const createEntityOrEntities = async <T extends TTable>({
 > => {
     try {
         const entityService = new EntityService();
-        return await entityService.createEntityOrEntities({
+        return await entityService.createEntityOrEntities<T>({
             relation,
-            entityName,
             formData,
             selectCriteria,
         });

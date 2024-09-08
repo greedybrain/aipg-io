@@ -18,6 +18,7 @@
     "dependencies": {
         "@eslint/config-array": "^0.18.0",
         "@eslint/object-schema": "^2.1.4",
+        "@supabase/postgrest-js": "^1.16.0",
         "@supabase/ssr": "^0.5.1",
         "@supabase/supabase-js": "^2.45.2",
         "class-variance-authority": "^0.7.0",

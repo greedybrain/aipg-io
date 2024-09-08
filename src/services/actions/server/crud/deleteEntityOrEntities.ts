@@ -8,13 +8,12 @@ import {
     TTableRow,
 } from "@/types";
 
-import { EntityService } from "../../../../models/entity-service";
+import { EntityService } from "../models/entity-service";
 import { getErrorMessage } from "../../../../utils/status-messages/get-error-message";
 
 export const deleteEntityOrEntities = async <T extends TTable>({
     relation,
     entityIds,
-    entityName,
     selectCriteria,
 }: TDeleteEntityArgs<T>): Promise<
     TEntityActionResponse<
@@ -23,10 +22,9 @@ export const deleteEntityOrEntities = async <T extends TTable>({
 > => {
     try {
         const entityService = new EntityService();
-        return await entityService.deleteEntityOrEntities({
+        return await entityService.deleteEntityOrEntities<T>({
             relation,
             entityIds,
-            entityName,
             selectCriteria,
         });
     } catch (error) {

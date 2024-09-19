@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/utils/supabase/server";
+import { createEntityOrEntities } from "@/services/actions/server/crud/createEntityOrEntities";
 
 export async function GET(request: Request) {
     const { searchParams, origin } = new URL(request.url);
@@ -9,8 +10,38 @@ export async function GET(request: Request) {
 
     if (code) {
         const supabase = createClient();
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
+        const {
+            data: { user },
+            error,
+        } = await supabase.auth.exchangeCodeForSession(code);
+
         if (!error) {
+            if (user && user.email) {
+                const { data: appUser } = await supabase
+                    .from("appUsers")
+                    .select()
+                    .eq("userId", user.id)
+                    .single();
+
+                if (!appUser) {
+                    await createEntityOrEntities<"appUsers">({
+                        relation: "appUsers",
+                        formData: {
+                            email: user.email,
+                            userId: user.id,
+                            avatarUrl:
+                                user.user_metadata.avatar_url ||
+                                user.user_metadata.picture ||
+                                null,
+                            name: (
+                                user.user_metadata.name ||
+                                user.user_metadata.full_name
+                            ).trim(),
+                        },
+                    });
+                }
+            }
+
             const forwardedHost = request.headers.get("x-forwarded-host"); // original origin before load balancer
             const isLocalEnv = process.env.NODE_ENV === "development";
             if (isLocalEnv) {
@@ -25,5 +56,5 @@ export async function GET(request: Request) {
     }
 
     // return the user to an error page with instructions
-    return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+    return NextResponse.redirect(`${origin}/auth/login`);
 }

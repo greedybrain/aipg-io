@@ -2,6 +2,7 @@ import { Provider, SupabaseClient, User } from "@supabase/supabase-js";
 
 import { Database } from "@/types/database.types";
 import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
+import { TSelectAppUser } from "@/db/drizzle/schemas";
 
 // SUPABASE
 export type TTables = Database["public"]["Tables"];
@@ -21,7 +22,15 @@ export type TFilterBuilder<T extends TTable> = PostgrestFilterBuilder<
 export type TAuthActionResponse = {
     success: boolean;
     message: string;
-    user: User | undefined;
+    user:
+        | {
+              authUser: User;
+              appUser: TSelectAppUser;
+          }
+        | {
+              authUser: undefined;
+              appUser: undefined;
+          };
 };
 export type TEntityActionResponse<TData = undefined> = {
     success: boolean;

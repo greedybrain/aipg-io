@@ -1,11 +1,17 @@
-import { cn } from "@/utils/tailwind/tw-merge";
+import HomeAiToolsListSection from "@/components/ui/home-ai-tools-list-section";
+import HomeFiltersSection from "@/components/ui/home-filters-section";
+import HomeHeroSection from "@/components/ui/home-hero-section";
+import HomeMarqueeSection from "@/components/ui/home-marquee-section";
+import HomeSearchSection from "@/components/ui/home-search-section";
 
 export default async function Home() {
     return (
-        <main className="flex min-h-screen flex-col items-center justify-between p-24">
-            <h1 className={cn("font-extrabold text-5xl")}>
-                Just a workflow template
-            </h1>
+        <main className="min-h-screen">
+            <HomeHeroSection />
+            <HomeSearchSection />
+            <HomeMarqueeSection />
+            <HomeFiltersSection />
+            <HomeAiToolsListSection />
         </main>
     );
 }

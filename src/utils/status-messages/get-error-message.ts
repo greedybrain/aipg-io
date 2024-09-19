@@ -1,5 +1,5 @@
-import { authErrorMessages } from "./error-codes-and-messages/auth-error-messages";
-import { storageErrorMessages } from "./error-codes-and-messages/storage-error-messages";
+import { authErrorMessages } from "../data/error-codes-and-messages/auth-error-messages";
+import { storageErrorMessages } from "../data/error-codes-and-messages/storage-error-messages";
 
 export const getErrorMessage = (error: unknown): string => {
     let message: string;

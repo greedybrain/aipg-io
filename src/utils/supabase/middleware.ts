@@ -1,4 +1,11 @@
+import {
+    AUTH_ROUTES,
+    HOME_ROUTE,
+    LOGIN_ROUTE,
+    PROTECTED_ROUTES,
+} from "@/constants";
 import { createServerClient } from "@supabase/ssr";
+import { NextURL } from "next/dist/server/web/next-url";
 import { NextResponse, type NextRequest } from "next/server";
 
 export async function updateSession(request: NextRequest) {
@@ -37,10 +44,20 @@ export async function updateSession(request: NextRequest) {
         data: { user },
     } = await supabase.auth.getUser();
 
-    if (!user && !request.nextUrl.pathname.startsWith("/auth")) {
-        // no user, potentially respond by redirecting the user to the login page
-        const url = request.nextUrl.clone();
-        url.pathname = "/auth/login";
+    const isAuthRoute = AUTH_ROUTES.includes(request.nextUrl.pathname);
+    const isProtectedRoute = PROTECTED_ROUTES.includes(
+        request.nextUrl.pathname,
+    );
+
+    if (!user && isProtectedRoute) {
+        const url: NextURL = request.nextUrl.clone();
+        url.pathname = LOGIN_ROUTE;
+        return NextResponse.redirect(url);
+    }
+
+    if (user && isAuthRoute) {
+        const url: NextURL = request.nextUrl.clone();
+        url.pathname = HOME_ROUTE;
         return NextResponse.redirect(url);
     }
 

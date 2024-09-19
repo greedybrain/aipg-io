@@ -138,8 +138,8 @@ export class EntityService {
 
     async readEntityOrEntities<T extends TTable>({
         relation,
+        entityId,
         entityIds,
-
         selectCriteria,
     }: TReadEntityArgs<T>): Promise<
         TEntityActionResponse<
@@ -153,6 +153,16 @@ export class EntityService {
 
             let data: TTableRow<T> | TTableRow<T>[] | null,
                 error: PostgrestError | null;
+
+            if (entityId) {
+                ({ data, error } = (await supabase
+                    .from<TTable, TTables[TTable]>(relation)
+                    .select(selectCriteria?.columns, selectCriteria?.options)
+                    .in("id", [entityId])) as {
+                    data: TTableRow<T>[] | null;
+                    error: PostgrestError | null;
+                });
+            }
 
             if (!entityIds || entityIds.length === 0) {
                 ({ data, error } = await supabase

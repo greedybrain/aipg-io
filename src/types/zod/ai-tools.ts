@@ -127,7 +127,8 @@ export const AiToolSchema = z.object({
                     .max(255, "File name must not exceed 255 characters"),
             }),
         ),
-        videoURLs: z.array(z.string().url("Invalid URL formats")).default([]),
+        videoURL: z.string().url("Invalid URL format"),
+        videoURLs: z.array(z.string().url("Invalid URL format")).default([]),
     }),
 
     // ================ App & Extension URLs ==================
@@ -182,7 +183,10 @@ export const defaultValues: z.infer<typeof AiToolSchema> = {
         promotionDescription: null, // Default null for promotion description
         tier: {
             name: "",
-            price: null,
+            price: {
+                monthly: "",
+                annually: "",
+            },
             description: "",
             offering: "",
             offerings: [],
@@ -194,6 +198,7 @@ export const defaultValues: z.infer<typeof AiToolSchema> = {
     // ================ Media & Resources ==================
     mediaAndResources: {
         webImages: [], // Empty array for web images
+        videoURL: "",
         videoURLs: [], // Empty array for video URLs
     },
 

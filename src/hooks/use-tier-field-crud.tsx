@@ -1,4 +1,5 @@
 import { TTier } from "@/types/ai-tools";
+import { defaultValues as defaultAiToolValues } from "@/types/zod/ai-tools";
 import { notify } from "@/utils/alerts/toast";
 import { useAiToolFormContext } from "./use-ai-tool-form-context";
 import { useState } from "react";
@@ -27,8 +28,9 @@ const useTierFieldCrud = () => {
             return;
         }
 
-        const existingTiers = methods.getValues("pricingInfo.tiers");
+        const existingTiers = getExistingTiers();
         methods.setValue("pricingInfo.tiers", [...existingTiers, tier]);
+        resetTier();
     };
 
     const editTier = (idx: number, tierToEdit: TTier) => {
@@ -38,27 +40,19 @@ const useTierFieldCrud = () => {
     };
 
     const updateTier = () => {
-        const existingTiers = methods.getValues("pricingInfo.tiers");
+        const existingTiers = getExistingTiers();
 
         if (idx > -1) {
             existingTiers[idx] = tier;
             methods.setValue("pricingInfo.tiers", existingTiers);
-            methods.resetField("pricingInfo.tier", {
-                defaultValue: {
-                    name: "",
-                    description: "",
-                    offering: "",
-                    offerings: [],
-                    price: null,
-                },
-            });
+            resetTier();
             setEditMode(false);
             setIdx(-1);
         }
     };
 
     const deleteTier = (tierName: string) => {
-        const existingTiers = methods.getValues("pricingInfo.tiers");
+        const existingTiers = getExistingTiers();
 
         methods.setValue(
             "pricingInfo.tiers",
@@ -66,6 +60,15 @@ const useTierFieldCrud = () => {
                 (existingTier) => existingTier.name !== tierName,
             ),
         );
+    };
+
+    // Helpers
+    const getExistingTiers = () => methods.getValues("pricingInfo.tiers");
+
+    const resetTier = () => {
+        methods.resetField("pricingInfo.tier", {
+            defaultValue: defaultAiToolValues.pricingInfo.tier,
+        });
     };
 
     return {

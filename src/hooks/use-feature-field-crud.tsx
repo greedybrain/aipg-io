@@ -19,15 +19,13 @@ const useFeatureFieldCrud = () => {
                 });
                 return;
             }
-            const existingFeatures = methods.getValues(
-                "platformAndTechnicalInfo.features",
-            );
+            const existingFeatures = getExistingFeatures();
             methods.setValue("platformAndTechnicalInfo.features", [
                 ...existingFeatures,
                 feature,
             ]);
         }
-        methods.resetField("platformAndTechnicalInfo.feature");
+        resetFeature();
     };
 
     const editFeature = (idx: number, featureToEdit: string) => {
@@ -37,9 +35,7 @@ const useFeatureFieldCrud = () => {
     };
 
     const updateFeature = () => {
-        const existingFeatures = methods.getValues(
-            "platformAndTechnicalInfo.features",
-        );
+        const existingFeatures = getExistingFeatures();
 
         if (feature && idx > -1) {
             existingFeatures[idx] = feature;
@@ -47,16 +43,14 @@ const useFeatureFieldCrud = () => {
                 "platformAndTechnicalInfo.features",
                 existingFeatures,
             );
-            methods.resetField("platformAndTechnicalInfo.feature");
+            resetFeature();
             setEditMode(false);
             setIdx(-1);
         }
     };
 
     const deleteFeature = (feature: string) => {
-        const existingFeatures = methods.getValues(
-            "platformAndTechnicalInfo.features",
-        );
+        const existingFeatures = getExistingFeatures();
 
         methods.setValue(
             "platformAndTechnicalInfo.features",
@@ -64,6 +58,14 @@ const useFeatureFieldCrud = () => {
                 (existingFeature) => existingFeature !== feature,
             ),
         );
+    };
+
+    // Helpers
+    const getExistingFeatures = () =>
+        methods.getValues("platformAndTechnicalInfo.features");
+
+    const resetFeature = () => {
+        methods.resetField("platformAndTechnicalInfo.feature");
     };
 
     return {

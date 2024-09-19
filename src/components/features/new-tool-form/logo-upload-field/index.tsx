@@ -1,12 +1,13 @@
+import { BASIC_INFO_LOGO } from "@/constants";
 import NewToolFormField from "@/components/common/new-tool-form-field";
 
 const LogoUploadField = () => {
     return (
         <NewToolFormField
-            name="basicInfo.logo"
+            name={BASIC_INFO_LOGO}
             type="file"
             placeholder="Enter official website URL"
-            labelContent="Logo"
+            labelContent="Company Logo"
             formDescription="Upload the logo image for the tool. Preferably a high-quality image in PNG or JPEG format."
         />
     );

@@ -1,13 +1,14 @@
 "use client";
 
 import AddBulkOfferingsButton from "./add-bulk-offerings-button";
-import AddFeatureButton from "./add-offering-button";
-import AddedFeatures from "./added-offerings";
+import AddOfferingButton from "./add-offering-button";
+import AddedOfferings from "./added-offerings";
 import CancelEditButton from "./cancel-edit-button";
 import { FormMessage } from "@/components/ui/form";
 import Group from "@/components/layout/group";
 import NewToolFormField from "@/components/common/new-tool-form-field";
-import UpdateFeatureButton from "./update-offering-button";
+import { PRICING_INFO_TIER_OFFERING } from "@/constants";
+import UpdateOfferingButton from "./update-offering-button";
 import { cn } from "@/utils/tailwind/tw-merge";
 import useOfferingFieldCrud from "@/hooks/use-offering-field-crud";
 
@@ -27,7 +28,7 @@ const TierOfferingField = () => {
     return (
         <Group>
             <NewToolFormField
-                name="pricingInfo.tier.offering"
+                name={PRICING_INFO_TIER_OFFERING}
                 placeholder="Enter a offering, or multiple separated by comma"
                 labelContent="Tier Offerings"
                 formDescription="List the offerings included in this tier, separated by commas (e.g., 'Access to API, 24/7 Support, 100 GB Storage')."
@@ -38,12 +39,12 @@ const TierOfferingField = () => {
                 </FormMessage>
             )}
             <Group className={cn("flex gap-x-3 mt-5")}>
-                <AddFeatureButton
+                <AddOfferingButton
                     addOffering={addOffering}
                     offering={offering}
                     editMode={editMode}
                 />
-                <UpdateFeatureButton
+                <UpdateOfferingButton
                     updateOffering={updateOffering}
                     editMode={editMode}
                 />
@@ -57,7 +58,7 @@ const TierOfferingField = () => {
                 />
             </Group>
             {offerings.length > 0 && (
-                <AddedFeatures
+                <AddedOfferings
                     editMode={editMode}
                     editOffering={editOffering}
                     deleteOffering={deleteOffering}

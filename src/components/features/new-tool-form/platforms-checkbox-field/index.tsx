@@ -11,6 +11,7 @@ import {
 import { AiToolSchema } from "@/types/zod/ai-tools";
 import { Checkbox } from "@/components/ui/checkbox";
 import Group from "@/components/layout/group";
+import { PLATFORM_INFO_PLATFORMS } from "@/constants";
 import { cn } from "@/utils/tailwind/tw-merge";
 import { useAiToolFormContext } from "@/hooks/use-ai-tool-form-context";
 import { z } from "zod";
@@ -43,7 +44,7 @@ const PlatformsCheckboxField = () => {
     return (
         <FormField
             control={methods.control}
-            name="platformAndTechnicalInfo.platforms"
+            name={PLATFORM_INFO_PLATFORMS}
             render={() => (
                 <FormItem>
                     <Group>
@@ -60,7 +61,7 @@ const PlatformsCheckboxField = () => {
                             <FormField
                                 key={platform.id}
                                 control={methods.control}
-                                name="platformAndTechnicalInfo.platforms"
+                                name={PLATFORM_INFO_PLATFORMS}
                                 render={({ field }) => {
                                     return (
                                         <FormItem

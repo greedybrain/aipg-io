@@ -1,3 +1,4 @@
+import { defaultValues as defaultAiToolValues } from "@/types/zod/ai-tools";
 import { notify } from "@/utils/alerts/toast";
 import { useAiToolFormContext } from "./use-ai-tool-form-context";
 import { useState } from "react";
@@ -19,15 +20,13 @@ const useOfferingFieldCrud = () => {
                 });
                 return;
             }
-            const existingOfferings = methods.getValues(
-                "pricingInfo.tier.offerings",
-            );
+            const existingOfferings = getExistingOfferings();
             methods.setValue("pricingInfo.tier.offerings", [
                 ...existingOfferings,
                 offering,
             ]);
         }
-        methods.resetField("pricingInfo.tier.offering");
+        resetOffering();
     };
 
     const editOffering = (idx: number, offeringToEdit: string) => {
@@ -37,23 +36,19 @@ const useOfferingFieldCrud = () => {
     };
 
     const updateOffering = () => {
-        const existingOfferings = methods.getValues(
-            "pricingInfo.tier.offerings",
-        );
+        const existingOfferings = getExistingOfferings();
 
         if (offering && idx > -1) {
             existingOfferings[idx] = offering;
             methods.setValue("pricingInfo.tier.offerings", existingOfferings);
-            methods.resetField("pricingInfo.tier.offering");
+            resetOffering();
             setEditMode(false);
             setIdx(-1);
         }
     };
 
     const deleteOffering = (offering: string) => {
-        const existingOfferings = methods.getValues(
-            "pricingInfo.tier.offerings",
-        );
+        const existingOfferings = getExistingOfferings();
 
         methods.setValue(
             "pricingInfo.tier.offerings",
@@ -61,6 +56,16 @@ const useOfferingFieldCrud = () => {
                 (existingOffering) => existingOffering !== offering,
             ),
         );
+    };
+
+    // Helpers
+    const getExistingOfferings = () =>
+        methods.getValues("pricingInfo.tier.offerings");
+
+    const resetOffering = () => {
+        methods.resetField("pricingInfo.tier.offering", {
+            defaultValue: defaultAiToolValues.pricingInfo.tier.offering,
+        });
     };
 
     return {

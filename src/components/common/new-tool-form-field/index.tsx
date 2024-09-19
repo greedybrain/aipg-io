@@ -11,6 +11,7 @@ import { AiToolSchema } from "@/types/zod/ai-tools";
 import { FieldPath } from "react-hook-form";
 import { HTMLInputTypeAttribute } from "react";
 import { Input } from "@/components/ui/input";
+import { MEDIA_RESOURCES_WEB_IMAGES } from "@/constants";
 import { Textarea } from "@/components/ui/textarea";
 import { useAiToolFormContext } from "@/hooks/use-ai-tool-form-context";
 import { z } from "zod";
@@ -35,8 +36,6 @@ const NewToolFormField = <TFieldName extends FieldPath<FormValues>>({
     elementType,
 }: Props<TFieldName>) => {
     const methods = useAiToolFormContext();
-
-    console.log(methods.watch("basicInfo.description"));
 
     return (
         <FormField
@@ -68,6 +67,10 @@ const NewToolFormField = <TFieldName extends FieldPath<FormValues>>({
                                 id={name}
                                 placeholder={placeholder}
                                 type={type}
+                                multiple={
+                                    type === "file" &&
+                                    name === MEDIA_RESOURCES_WEB_IMAGES
+                                }
                                 isError={
                                     !!methods.formState.errors[
                                         name as keyof typeof methods.formState.errors

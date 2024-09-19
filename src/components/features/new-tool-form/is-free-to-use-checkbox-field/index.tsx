@@ -10,6 +10,7 @@ import {
 
 import { Checkbox } from "@/components/ui/checkbox";
 import Group from "@/components/layout/group";
+import { PRICING_INFO_IS_FREE } from "@/constants";
 import { cn } from "@/utils/tailwind/tw-merge";
 import { useAiToolFormContext } from "@/hooks/use-ai-tool-form-context";
 
@@ -19,7 +20,7 @@ const IsFreeToUseCheckboxField = () => {
     return (
         <FormField
             control={methods.control}
-            name="pricingInfo.isFreeToUse"
+            name={PRICING_INFO_IS_FREE}
             render={({ field }) => (
                 <FormItem>
                     <Group>
@@ -37,7 +38,7 @@ const IsFreeToUseCheckboxField = () => {
                                 checked={field.value}
                                 onCheckedChange={(checked) =>
                                     methods.setValue(
-                                        "pricingInfo.isFreeToUse",
+                                        PRICING_INFO_IS_FREE,
                                         !!checked,
                                     )
                                 }

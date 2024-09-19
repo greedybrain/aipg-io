@@ -18,7 +18,6 @@ export const AUTH_ROUTES = [
 export const PROTECTED_ROUTES = [USER_FAVORITES_ROUTE];
 
 // PRIVACY POLICY Qs
-
 export const POLICY_QUESTION_ONE = `What types of personal information do you collect from your website visitors?`;
 export const POLICY_QUESTION_TWO = `How do you collect this information?`;
 export const POLICY_QUESTION_THREE = `How do you use this information?`;
@@ -35,3 +34,64 @@ export const POLICY_ANSWER_FIVE = `We do not provide any opt-out options for vis
 export const POLICY_ANSWER_SIX = `Yes the laws of the United States of America, specifically New York apply to our website.`;
 export const POLICY_ANSWER_SEVEN = `We do not knowingly solicit data from or market to children under 18 years of age. By using the Services, you represent that you are at least 18 or that you are the parent or guardian of such a minor and consent to such minor dependent’s use of the Services. If we learn that personal information from users less than 18 years of age has been collected, we will deactivate the account and take reasonable measures to promptly delete such data from our records. If you become aware of any data we may have collected from children under age 18, please contact us at - aiforyou@aipg.io.`;
 export const POLICY_ANSWER_EIGHT = `We will update this notice as necessary to stay compliant with relevant laws.`;
+
+// AI TOOL SCHEMA
+// Basic Information
+export const BASIC_INFO_NAME = "basicInfo.name";
+export const BASIC_INFO_COMPANY_NAME = "basicInfo.developerOrCompanyName";
+export const BASIC_INFO_WEBSITE = "basicInfo.officialWebsiteURL";
+export const BASIC_INFO_LOGO = "basicInfo.logo";
+export const BASIC_INFO_LOGO_SIZE = "basicInfo.logo.size";
+export const BASIC_INFO_LOGO_TYPE = "basicInfo.logo.type";
+export const BASIC_INFO_LOGO_NAME = "basicInfo.logo.name";
+export const BASIC_INFO_DESCRIPTION = "basicInfo.description";
+
+// Platform & Technical Information
+export const PLATFORM_INFO_PLATFORMS = "platformAndTechnicalInfo.platforms";
+export const PLATFORM_INFO_OPERATING_SYSTEMS =
+    "platformAndTechnicalInfo.operatingSystems";
+export const PLATFORM_INFO_FEATURE = "platformAndTechnicalInfo.feature";
+export const PLATFORM_INFO_FEATURES = "platformAndTechnicalInfo.features";
+
+// Pricing Information
+export const PRICING_INFO_IS_FREE = "pricingInfo.isFreeToUse";
+export const PRICING_INFO_HAS_FREE_TRIAL = "pricingInfo.hasFreeTierOrTrial";
+export const PRICING_INFO_ONE_TIME_PURCHASE =
+    "pricingInfo.oneTimePurchasePrice";
+export const PRICING_INFO_PROMOTION_DESCRIPTION =
+    "pricingInfo.promotionDescription";
+export const PRICING_INFO_TIER = "pricingInfo.tier";
+export const PRICING_INFO_TIER_NAME = "pricingInfo.tier.name";
+export const PRICING_INFO_TIER_PRICE_MONTHLY = "pricingInfo.tier.price.monthly";
+export const PRICING_INFO_TIER_PRICE_ANNUALLY =
+    "pricingInfo.tier.price.annually";
+export const PRICING_INFO_TIER_DESCRIPTION = "pricingInfo.tier.description";
+export const PRICING_INFO_TIER_OFFERING = "pricingInfo.tier.offering";
+export const PRICING_INFO_TIER_OFFERINGS = "pricingInfo.tier.offerings";
+export const PRICING_INFO_TIERS = "pricingInfo.tiers";
+export const PRICING_INFO_PRICE_INFO_URL = "pricingInfo.priceInfoURL";
+
+// Media & Resources
+export const MEDIA_RESOURCES_WEB_IMAGES = "mediaAndResources.webImages";
+export const MEDIA_RESOURCES_VIDEO_URL = "mediaAndResources.videoURL";
+export const MEDIA_RESOURCES_VIDEO_URLS = "mediaAndResources.videoURLs";
+
+// App & Extension URLs
+export const APP_EXT_URLS_IOS = "appAndExtURLs.iosAppURL";
+export const APP_EXT_URLS_ANDROID = "appAndExtURLs.androidAppURL";
+export const APP_EXT_URLS_CHROME = "appAndExtURLs.chromeExtensionURL";
+export const APP_EXT_URLS_FIREFOX = "appAndExtURLs.firefoxAddonURL";
+export const APP_EXT_URLS_EDGE = "appAndExtURLs.edgeExtensionURL";
+export const APP_EXT_URLS_SAFARI = "appAndExtURLs.safariExtensionURL";
+export const APP_EXT_URLS_LINUX = "appAndExtURLs.linuxPackageURL";
+export const APP_EXT_URLS_WINDOWS = "appAndExtURLs.windowsStoreURL";
+export const APP_EXT_URLS_MACOS = "appAndExtURLs.macosAppStoreURL";
+export const APP_EXT_URLS_APK = "appAndExtURLs.apkDownloadURL";
+
+// Affiliate and API Information
+export const AFFILIATE_API_INFO_API_DOC_URL =
+    "affiliateAndApiInfo.apiDocumentationURL";
+export const AFFILIATE_API_INFO_AFFILIATE_RESOURCE_URL =
+    "affiliateAndApiInfo.affiliateResourceURL";
+export const AFFILIATE_API_INFO_CUSTOM_AFFILIATE_URL =
+    "affiliateAndApiInfo.customAffiliateURL";

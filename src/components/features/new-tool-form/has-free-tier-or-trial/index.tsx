@@ -10,18 +10,17 @@ import {
 
 import { Checkbox } from "@/components/ui/checkbox";
 import Group from "@/components/layout/group";
+import { PRICING_INFO_HAS_FREE_TRIAL } from "@/constants";
 import { cn } from "@/utils/tailwind/tw-merge";
 import { useAiToolFormContext } from "@/hooks/use-ai-tool-form-context";
 
 const HasFreeTierOrTrial = () => {
     const methods = useAiToolFormContext();
 
-    console.log(methods.getValues("pricingInfo.hasFreeTierOrTrial"));
-
     return (
         <FormField
             control={methods.control}
-            name="pricingInfo.hasFreeTierOrTrial"
+            name={PRICING_INFO_HAS_FREE_TRIAL}
             render={({ field }) => (
                 <FormItem>
                     <Group>
@@ -39,14 +38,14 @@ const HasFreeTierOrTrial = () => {
                                 checked={field.value}
                                 onCheckedChange={(checked) =>
                                     methods.setValue(
-                                        "pricingInfo.hasFreeTierOrTrial",
+                                        PRICING_INFO_HAS_FREE_TRIAL,
                                         !!checked,
                                     )
                                 }
                             />
                         </FormControl>
                         <FormLabel className={cn("font-normal text-[16px]")}>
-                            Enter one-time purchase price
+                            Has Free Tier or Trial
                         </FormLabel>
                     </Group>
                 </FormItem>

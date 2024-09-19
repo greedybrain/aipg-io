@@ -2,7 +2,9 @@
 
 import { Button } from "@/components/ui/button";
 import { SetStateAction } from "react";
-import useFeatureFieldCrud from "@/hooks/use-feature-field-crud";
+import { defaultValues as defaultAiToolValues } from "@/types/zod/ai-tools";
+import useTierFieldCrud from "@/hooks/use-tier-field-crud";
+import { PRICING_INFO_TIER } from "@/constants";
 
 interface Props {
     editMode: boolean;
@@ -10,7 +12,7 @@ interface Props {
 }
 
 const CancelEditButton = ({ editMode, setEditMode }: Props) => {
-    const { methods } = useFeatureFieldCrud();
+    const { methods } = useTierFieldCrud();
 
     if (!editMode) return null;
 
@@ -20,7 +22,9 @@ const CancelEditButton = ({ editMode, setEditMode }: Props) => {
             variant={"outline"}
             onClick={() => {
                 setEditMode(false);
-                methods.resetField("platformAndTechnicalInfo.feature");
+                methods.resetField(PRICING_INFO_TIER, {
+                    defaultValue: defaultAiToolValues.pricingInfo.tier,
+                });
             }}
         >
             Cancel

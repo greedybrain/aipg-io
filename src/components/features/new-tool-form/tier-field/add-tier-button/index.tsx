@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { TTier } from "@/types/ai-tools";
+import { cn } from "@/utils/tailwind/tw-merge";
 
 interface Props {
     editMode: boolean;
@@ -8,11 +9,15 @@ interface Props {
 }
 
 const AddTierButton = ({ editMode, tier, addTier }: Props) => {
-    if (editMode || !tier.name || !tier.offerings.length) return null;
-
     return (
-        <Button type="button" variant={"tertiary"} onClick={addTier}>
-            Add feature
+        <Button
+            disabled={editMode || !tier.name || !tier.offerings.length}
+            type="button"
+            variant={"tertiary"}
+            onClick={addTier}
+            className={cn("w-[150px]")}
+        >
+            Add tier
         </Button>
     );
 };

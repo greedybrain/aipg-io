@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { PRICING_INFO_TIER_OFFERING } from "@/constants";
 import { SetStateAction } from "react";
 import useFeatureFieldCrud from "@/hooks/use-feature-field-crud";
 
@@ -20,7 +21,7 @@ const CancelEditButton = ({ editMode, setEditMode }: Props) => {
             variant={"outline"}
             onClick={() => {
                 setEditMode(false);
-                methods.resetField("platformAndTechnicalInfo.feature");
+                methods.resetField(PRICING_INFO_TIER_OFFERING);
             }}
         >
             Cancel

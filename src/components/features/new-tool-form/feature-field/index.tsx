@@ -7,6 +7,7 @@ import CancelEditButton from "./cancel-edit-button";
 import { FormMessage } from "@/components/ui/form";
 import Group from "@/components/layout/group";
 import NewToolFormField from "@/components/common/new-tool-form-field";
+import { PLATFORM_INFO_FEATURE } from "@/constants";
 import UpdateFeatureButton from "./update-feature-button";
 import { cn } from "@/utils/tailwind/tw-merge";
 import useFeatureFieldCrud from "@/hooks/use-feature-field-crud";
@@ -27,7 +28,7 @@ const FeatureField = () => {
     return (
         <Group>
             <NewToolFormField
-                name="platformAndTechnicalInfo.feature"
+                name={PLATFORM_INFO_FEATURE}
                 placeholder="Enter key feature, or features separated by comma"
                 labelContent="Key Features"
                 formDescription="List the main features of the tool. Each feature should be concise and to the point. To bulk add features, separate each feature with a comma."

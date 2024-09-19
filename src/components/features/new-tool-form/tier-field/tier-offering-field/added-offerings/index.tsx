@@ -8,7 +8,7 @@ interface Props {
     deleteOffering: (offering: string) => void;
 }
 
-const AddedFeatures = ({ editMode, editOffering, deleteOffering }: Props) => {
+const AddedOfferings = ({ editMode, editOffering, deleteOffering }: Props) => {
     const { offerings } = useOfferingFieldCrud();
 
     return (
@@ -60,4 +60,4 @@ const AddedFeatures = ({ editMode, editOffering, deleteOffering }: Props) => {
     );
 };
 
-export default AddedFeatures;
+export default AddedOfferings;

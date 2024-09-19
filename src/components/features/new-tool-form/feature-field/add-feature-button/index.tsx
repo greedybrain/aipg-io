@@ -7,10 +7,13 @@ interface Props {
 }
 
 const AddFeatureButton = ({ editMode, feature, addFeature }: Props) => {
-    if (!feature || feature.includes(",") || editMode) return null;
-
     return (
-        <Button type="button" variant={"tertiary"} onClick={addFeature}>
+        <Button
+            disabled={!feature || feature.includes(",") || editMode}
+            type="button"
+            variant={"tertiary"}
+            onClick={addFeature}
+        >
             Add feature
         </Button>
     );

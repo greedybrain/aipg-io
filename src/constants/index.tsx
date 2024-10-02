@@ -8,6 +8,7 @@ export const UPDATE_PASSWORD_ROUTE = "/auth/update-password";
 export const RESET_COMPLETE_ROUTE = "/auth/reset-complete";
 export const PRIVACY_ROUTE = "/privacy";
 export const USER_FAVORITES_ROUTE = "/user/favorites";
+export const TOOL_MANAGER_NEW_TOOL_ROUTE = "/admin/tool-manager/new";
 
 export const AUTH_ROUTES = [
     LOGIN_ROUTE,
@@ -16,6 +17,13 @@ export const AUTH_ROUTES = [
     UPDATE_PASSWORD_ROUTE,
 ];
 export const PROTECTED_ROUTES = [USER_FAVORITES_ROUTE];
+export const ADMIN_ROUTES = [TOOL_MANAGER_NEW_TOOL_ROUTE];
+
+// STORAGE BUCKETS
+export const AI_TOOL_LOGOS_BUCKET = "aipg-aiplayground-ai-tool-logos";
+export const AI_TOOL_WEB_IMAGES_BUCKET = "aipg-aiplayground-ai-tool-web-images";
+export const INTEGRATION_LOGOS_BUCKET =
+    "aipg-aiplayground-ai-tool-integration-logos";
 
 // PRIVACY POLICY Qs
 export const POLICY_QUESTION_ONE = `What types of personal information do you collect from your website visitors?`;
@@ -44,6 +52,7 @@ export const BASIC_INFO_LOGO = "basicInfo.logo";
 export const BASIC_INFO_LOGO_SIZE = "basicInfo.logo.size";
 export const BASIC_INFO_LOGO_TYPE = "basicInfo.logo.type";
 export const BASIC_INFO_LOGO_NAME = "basicInfo.logo.name";
+export const BASIC_INFO_LOGO_PREVIEW = "basicInfo.logo.logoPreview";
 export const BASIC_INFO_DESCRIPTION = "basicInfo.description";
 
 // Platform & Technical Information
@@ -52,6 +61,9 @@ export const PLATFORM_INFO_OPERATING_SYSTEMS =
     "platformAndTechnicalInfo.operatingSystems";
 export const PLATFORM_INFO_FEATURE = "platformAndTechnicalInfo.feature";
 export const PLATFORM_INFO_FEATURES = "platformAndTechnicalInfo.features";
+export const PLATFORM_INFO_INTEGRATION = "platformAndTechnicalInfo.integration";
+export const PLATFORM_INFO_INTEGRATIONS =
+    "platformAndTechnicalInfo.integrations";
 
 // Pricing Information
 export const PRICING_INFO_IS_FREE = "pricingInfo.isFreeToUse";

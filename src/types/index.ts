@@ -1,22 +1,6 @@
 import { Provider, SupabaseClient, User } from "@supabase/supabase-js";
 
-import { Database } from "@/types/database.types";
-import { PostgrestFilterBuilder } from "@supabase/postgrest-js";
-import { TSelectAppUser } from "@/db/drizzle/schemas";
-
-// SUPABASE
-export type TTables = Database["public"]["Tables"];
-export type TTable = keyof TTables;
-export type TTableRow<T extends TTable> = TTables[T]["Row"];
-export type TTableUpdate<T extends TTable> = TTables[T]["Update"];
-export type TTableInsert<T extends TTable> = TTables[T]["Insert"];
-export type TFilterBuilder<T extends TTable> = PostgrestFilterBuilder<
-    Database["public"],
-    TTableRow<T>,
-    TTableRow<T>,
-    T,
-    TTables[T]["Relationships"]
->;
+import { TSelectAppUser } from "@/db/drizzle/schemas/app-users";
 
 // CUSTOM RESPONSES
 export type TAuthActionResponse = {
@@ -31,27 +15,6 @@ export type TAuthActionResponse = {
               authUser: undefined;
               appUser: undefined;
           };
-};
-export type TEntityActionResponse<TData = undefined> = {
-    success: boolean;
-    message: string;
-    data: TData;
-};
-export type TSuccessMessageType =
-    | "readOne"
-    | "readMany"
-    | "readAll"
-    | "createOne"
-    | "createMany"
-    | "updateOne"
-    | "upsertOne"
-    | "upsertMany"
-    | "deleteOne"
-    | "deleteMany";
-
-export type TSuccessMessageArgs = {
-    messageType: TSuccessMessageType;
-    relation?: TTable;
 };
 
 // AUTH
@@ -69,37 +32,6 @@ export type TOAuthOption = {
     icon: string;
 };
 
-// CRUD
-export type TSelectCriteria = {
-    columns: string;
-    options?: {
-        head?: boolean;
-        count?: "exact" | "planned" | "estimated";
-    };
-};
-export type TBaseEntity<T extends TTable> = {
-    relation: T;
-    entityId?: string;
-    selectCriteria?: TSelectCriteria;
-};
-export type TCreateEntityArgs<T extends TTable> = TBaseEntity<T> & {
-    formData: TTableInsert<T> | TTableInsert<T>[];
-};
-export type TDeleteEntityArgs<T extends TTable> = TBaseEntity<T> & {
-    entityIds: string[];
-};
-export type TMaybeEntity<TEntity> = TEntity | null | undefined;
-export type TReadEntityArgs<T extends TTable> = TBaseEntity<T> & {
-    entityIds?: string[];
-};
-export type TUpdateEntityArgs<T extends TTable> = TBaseEntity<T> & {
-    formData: TTables[T]["Update"];
-};
-export type TUpsertEntityArgs<T extends TTable> = TBaseEntity<T> & {
-    formData: TTables[T]["Insert"] | TTables[T]["Insert"][];
-    onConflictColumns?: string;
-};
-
 // STORAGE
 export type TUploadFileOrFilesParams = {
     bucketName: string;
@@ -111,4 +43,14 @@ export type TUploadHelperParams = {
     supabase: SupabaseClient<any, "public", any>;
     bucketName: string;
     file: File;
+};
+
+// ENTITIES
+export type TEntityTableMapping = {
+    AppUser: typeof import("@/db/drizzle/schemas/app-users")["AppUser"];
+    AITool: typeof import("@/db/drizzle/schemas/ai-tools")["AITool"];
+    AIToolIntegration: typeof import("@/db/drizzle/schemas/ai-tool-integrations")["AIToolIntegration"];
+    AIToolTag: typeof import("@/db/drizzle/schemas/ai-tool-tags")["AIToolTag"];
+    Integration: typeof import("@/db/drizzle/schemas/integrations")["Integration"];
+    Tag: typeof import("@/db/drizzle/schemas/tags")["Tag"];
 };

@@ -15,6 +15,27 @@
       "when": 1726440752399,
       "tag": "0001_bored_talos",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1726932248513,
+      "tag": "0002_smart_spot",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1727744583888,
+      "tag": "0003_tearful_tusk",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1727826537757,
+      "tag": "0004_abandoned_mephistopheles",
+      "breakpoints": true
     }
   ]
 }

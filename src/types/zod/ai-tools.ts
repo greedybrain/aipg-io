@@ -1,28 +1,46 @@
 import { z } from "zod";
 
-const tierSchema = z.object({
-    name: z.string().min(1, "Tier name is required"),
-    price: z
-        .object({
-            monthly: z.string().nullable(),
-            annually: z.string().nullable(),
-        })
-        .nullable(),
-    description: z
-        .string()
-        .max(255, "Description must not exceed 255 characters")
-        .nullable(),
-    offering: z.string().nullable(),
-    offerings: z
-        .array(z.string())
-        .refine((offerings) => offerings.length > 0, {
-            message: "At least one offering is required",
-        })
-        .refine(
-            (offerings) => offerings.every((offering) => offering.length > 0),
-            "Each offering must be a non-empty string",
-        ),
-});
+const tierSchema = z
+    .object({
+        name: z.string().nullable(),
+        price: z
+            .object({
+                monthly: z.string().nullable().default(null),
+                annually: z.string().nullable().default(null),
+            })
+            .nullable()
+            .default(null),
+        description: z
+            .string()
+            .max(255, "Description must not exceed 255 characters")
+            .nullable()
+            .default(null),
+        offering: z.string().nullable().default(null),
+        offerings: z
+            .array(z.string())
+            .refine(
+                (offerings) =>
+                    offerings.every((offering) => offering.length > 0),
+                "Each offering must be a non-empty string",
+            ),
+    })
+    .superRefine(({ name, offerings }, ctx) => {
+        if (name && !offerings.length) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: `You must add offers for tier named: "${name}"`,
+                path: ["offering"],
+            });
+        }
+
+        if (offerings.length && !name) {
+            ctx.addIssue({
+                code: z.ZodIssueCode.custom,
+                message: `You must name a tier that has offers`,
+                path: ["name"],
+            });
+        }
+    });
 
 const urlSchema = z.string().url("Invalid URL format").nullable();
 
@@ -65,6 +83,7 @@ export const AiToolSchema = z.object({
                 .string()
                 .min(1, "File name is required")
                 .max(255, "File name must not exceed 255 characters"),
+            logoPreview: z.string().optional(),
         }),
         description: z
             .string()
@@ -114,21 +133,25 @@ export const AiToolSchema = z.object({
             z.object({
                 size: z
                     .number()
-                    .max(3 * 1024 * 1024, "Logo must not exceed 3MB"),
+                    .max(4 * 1024 * 1024, "Logo must not exceed 4MB"),
                 type: z
                     .string()
                     .refine(
-                        (type) => ["image/jpeg", "image/png"].includes(type),
+                        (type) =>
+                            ["image/jpeg", "image/png", "image/webp"].includes(
+                                type,
+                            ),
                         "Only JPEG and PNG formats are supported",
                     ),
                 name: z
                     .string()
                     .min(1, "File name is required")
                     .max(255, "File name must not exceed 255 characters"),
+                webImagePreview: z.string().optional(),
             }),
         ),
-        videoURL: z.string().url("Invalid URL format"),
-        videoURLs: z.array(z.string().url("Invalid URL format")).default([]),
+        videoURL: z.string().nullable().default(null),
+        videoURLs: z.array(z.string()).default([]),
     }),
 
     // ================ App & Extension URLs ==================
@@ -163,6 +186,7 @@ export const defaultValues: z.infer<typeof AiToolSchema> = {
             size: 0,
             type: "",
             name: "",
+            logoPreview: undefined,
         },
         description: "",
     },

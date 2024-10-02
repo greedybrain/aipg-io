@@ -10,7 +10,7 @@ import { TAuthActionResponse, TAuthFlow } from "@/types";
 import { AppUser } from "@/db/drizzle/schemas";
 import { authErrorMessages } from "@/utils/data/error-codes-and-messages/auth-error-messages";
 import { createClient } from "@/utils/supabase/server";
-import { db } from "@/singletons/drizzle";
+import { db } from "@/db";
 import { eq } from "drizzle-orm";
 import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 import { handleAuthFlow } from "./helpers";

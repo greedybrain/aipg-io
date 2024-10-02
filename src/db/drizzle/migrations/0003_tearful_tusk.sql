@@ -1,0 +1,1 @@
+ALTER TABLE "integrations" ALTER COLUMN "nameLower" DROP NOT NULL;

@@ -4,6 +4,7 @@ import {
     LOGIN_ROUTE,
     PROTECTED_ROUTES,
 } from "@/constants";
+import { Database } from "@/types/database.types";
 import { createServerClient } from "@supabase/ssr";
 import { NextURL } from "next/dist/server/web/next-url";
 import { NextResponse, type NextRequest } from "next/server";
@@ -48,6 +49,23 @@ export async function updateSession(request: NextRequest) {
     const isProtectedRoute = PROTECTED_ROUTES.includes(
         request.nextUrl.pathname,
     );
+    const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
+
+    if (user) {
+        const { data: appUser } = await supabase
+            .from("appUsers")
+            .select("role")
+            .eq("userId", user.id)
+            .returns<Database["public"]["Tables"]["appUsers"]["Row"]>();
+
+        if (appUser && appUser.role) {
+            if (isAdminRoute && ["ADMIN", "OWNER"].includes(appUser.role)) {
+                const url: NextURL = request.nextUrl.clone();
+                url.pathname = HOME_ROUTE;
+                return NextResponse.redirect(url);
+            }
+        }
+    }
 
     if (!user && isProtectedRoute) {
         const url: NextURL = request.nextUrl.clone();

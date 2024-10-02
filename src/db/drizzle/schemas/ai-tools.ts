@@ -1,3 +1,14 @@
+import {
+    AIToolIntegration,
+    TSelectAIToolIntegrationWithRelations,
+} from "./ai-tool-integrations";
+import { AIToolTag, TSelectAIToolTagWithRelations } from "./ai-tool-tags";
+import {
+    InferInsertModel,
+    InferSelectModel,
+    relations,
+    sql,
+} from "drizzle-orm";
 import { TCreatedBy, TPricingModel } from "@/types/ai-tools";
 import {
     boolean,
@@ -8,8 +19,6 @@ import {
     timestamp,
     uniqueIndex,
 } from "drizzle-orm/pg-core";
-
-import { sql } from "drizzle-orm";
 
 export const platformsEnum = pgEnum("platformsenum", [
     "Web-based",
@@ -142,15 +151,16 @@ export const AITool = pgTable(
     }),
 );
 
-// // Relations
-// export const AIToolRelations = relations(AITool, ({ many }) => ({
-//     aiToolTags: many(AIToolTag),
-//     aiToolIntegrations: many(AIToolIntegration),
-// }));
+// Relations
+export const AIToolRelations = relations(AITool, ({ many }) => ({
+    aiToolTags: many(AIToolTag),
+    aiToolIntegrations: many(AIToolIntegration),
+}));
 
-// // Inferences
-// export type SelectAITool = InferSelectModel<typeof AITool> & {
-//     aiToolTags: SelectAIToolTag[];
-//     aiToolIntegrations?: SelectAIToolIntegration[];
-// };
-// export type InsertAITool = InferInsertModel<typeof AITool>;
+// Inferences
+export type TSelectAIToolBase = InferSelectModel<typeof AITool>;
+export type TSelectAIToolWithRelations = InferSelectModel<typeof AITool> & {
+    aiToolTags?: TSelectAIToolTagWithRelations[];
+    aiToolIntegrations?: TSelectAIToolIntegrationWithRelations[];
+};
+export type TInsertAITool = InferInsertModel<typeof AITool>;

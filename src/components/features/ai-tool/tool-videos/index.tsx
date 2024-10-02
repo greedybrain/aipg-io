@@ -1,24 +1,25 @@
 "use client";
 
-import { HTMLAttributes, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
+import ToolVideo from "./tool-video";
 import { cn } from "@/utils/tailwind/tw-merge";
 import { extractVideoId } from "@/utils/video/extract-video-id";
 import { extractVideoThumbnail } from "@/utils/video/extract-video-thumbnail";
 
-interface Props extends HTMLAttributes<HTMLUListElement> {
+interface Props {
     urls: string[];
-    listItemProps: HTMLAttributes<HTMLLIElement>;
 }
 
-type TVideoIdsAndThumbnails = {
+export type TVideoData = {
     videoId: string | null;
     thumbnail: string | null;
-}[];
+};
 
-const ToolVideos = ({ urls, listItemProps, ...rest }: Props) => {
-    const [videoIdsAndThumbnails, setVideoIdsAndThumbnails] =
-        useState<TVideoIdsAndThumbnails>([]);
+const ToolVideos = ({ urls }: Props) => {
+    const [videoIdsAndThumbnails, setVideoIdsAndThumbnails] = useState<
+        TVideoData[]
+    >([]);
 
     useEffect(() => {
         const fetchVideoData = async () => {
@@ -35,22 +36,10 @@ const ToolVideos = ({ urls, listItemProps, ...rest }: Props) => {
     }, [urls]);
 
     return (
-        <ul className={cn(rest.className)} {...rest}>
-            {videoIdsAndThumbnails.map((data) => {
-                return (
-                    <li key={data.videoId} {...listItemProps}>
-                        <iframe
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            allowFullScreen
-                            className={cn(
-                                `h-[inherit] w-[inherit] rounded-[inherit]`,
-                            )}
-                            src={`https://www.youtube-nocookie.com/embed/${data.videoId}`}
-                            title="YouTube video player"
-                        />
-                    </li>
-                );
-            })}
+        <ul className={cn("grid grid-cols-2")}>
+            {videoIdsAndThumbnails.map((data) => (
+                <ToolVideo key={data.videoId} videoData={data} />
+            ))}
         </ul>
     );
 };

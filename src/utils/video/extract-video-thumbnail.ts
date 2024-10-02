@@ -1,3 +1,5 @@
+"use server";
+
 import { extractVideoId } from "./extract-video-id";
 
 export const extractVideoThumbnail = async (

@@ -1,5 +1,5 @@
 import NavItem from "./nav-item";
-import SignupButton from "../../common/signup-button";
+// import SignupButton from "../../common/signup-button";
 import { cn } from "@/utils/tailwind/tw-merge";
 import navItems from "../nav-items-mobile/data/nav-items";
 
@@ -8,7 +8,6 @@ interface Props {
 }
 
 const NavItemsLarge = ({ userId }: Props) => {
-    console.log("User Id: ", userId);
     return (
         <nav className={cn("hidden sm:flex flex-col items-center")}>
             <ul className={cn("flex items-center gap-x-5")}>
@@ -25,7 +24,7 @@ const NavItemsLarge = ({ userId }: Props) => {
                         )
                     );
                 })}
-                {!userId && (
+                {/* {!userId && (
                     <li className={cn("")}>
                         <SignupButton
                             linkProps={{
@@ -33,7 +32,7 @@ const NavItemsLarge = ({ userId }: Props) => {
                             }}
                         />
                     </li>
-                )}
+                )} */}
             </ul>
         </nav>
     );

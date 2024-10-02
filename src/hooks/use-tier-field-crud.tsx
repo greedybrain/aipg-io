@@ -1,3 +1,4 @@
+import { PRICING_INFO_TIERS } from "@/constants";
 import { TTier } from "@/types/ai-tools";
 import { defaultValues as defaultAiToolValues } from "@/types/zod/ai-tools";
 import { notify } from "@/utils/alerts/toast";
@@ -29,7 +30,7 @@ const useTierFieldCrud = () => {
         }
 
         const existingTiers = getExistingTiers();
-        methods.setValue("pricingInfo.tiers", [...existingTiers, tier]);
+        methods.setValue(PRICING_INFO_TIERS, [...existingTiers, tier]);
         resetTier();
     };
 
@@ -44,7 +45,7 @@ const useTierFieldCrud = () => {
 
         if (idx > -1) {
             existingTiers[idx] = tier;
-            methods.setValue("pricingInfo.tiers", existingTiers);
+            methods.setValue(PRICING_INFO_TIERS, existingTiers);
             resetTier();
             setEditMode(false);
             setIdx(-1);
@@ -55,7 +56,7 @@ const useTierFieldCrud = () => {
         const existingTiers = getExistingTiers();
 
         methods.setValue(
-            "pricingInfo.tiers",
+            PRICING_INFO_TIERS,
             existingTiers.filter(
                 (existingTier) => existingTier.name !== tierName,
             ),
@@ -63,7 +64,7 @@ const useTierFieldCrud = () => {
     };
 
     // Helpers
-    const getExistingTiers = () => methods.getValues("pricingInfo.tiers");
+    const getExistingTiers = () => methods.getValues(PRICING_INFO_TIERS);
 
     const resetTier = () => {
         methods.resetField("pricingInfo.tier", {

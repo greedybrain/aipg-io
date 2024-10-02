@@ -15,6 +15,9 @@ class FileUploader {
             .from(this.bucketName)
             .upload(file.name, file);
 
+        console.log("Return data: ", data);
+        console.log("Return error: ", error);
+
         if (!data || error) throw new Error(storageErrorMessages[error.name]);
 
         const { publicUrl } = this.supabseClient.storage

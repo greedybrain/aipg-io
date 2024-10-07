@@ -48,11 +48,10 @@ export const server_createAITools = async (
             await server_createAIToolCreator(user.appUser.userId);
             await createAiToolTags(aiTool.id, tags);
             await createAiToolIntegrations(aiTool.id, integrations);
-            pricingInfo &&
-                (await server_createAIToolPriceModel({
-                    aiToolId: aiTool.id,
-                    ...pricingInfo,
-                }));
+            await server_createAIToolPriceModel({
+                aiToolId: aiTool.id,
+                ...pricingInfo,
+            });
         }
 
         return aiTool;

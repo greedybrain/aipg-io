@@ -1,29 +1,25 @@
 "use client";
 
-import { BASIC_INFO_LOGO, BASIC_INFO_LOGO_PREVIEW } from "@/constants";
-
+import { BASIC_INFO_LOGO } from "@/constants";
 import Group from "@/components/layout/group";
 import Image from "next/image";
 import { Upload } from "lucide-react";
 import { cn } from "@/utils/tailwind/tw-merge";
 import { useAiToolFormContext } from "@/hooks/use-ai-tool-form-context";
+import { useState } from "react";
 
 const LogoUploadField = () => {
+    const [logoPreview, setLogoPreview] = useState<string>();
     const methods = useAiToolFormContext();
-    const logoPreview = methods.getValues(BASIC_INFO_LOGO_PREVIEW);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = event.target.files;
 
         if (fileList) {
             const file = Array.from(fileList)[0];
-            const { name, type, size } = file;
-            methods.setValue(BASIC_INFO_LOGO, {
-                name,
-                type,
-                size,
-                logoPreview: URL.createObjectURL(file),
-            });
+
+            methods.setValue(BASIC_INFO_LOGO, file);
+            setLogoPreview(URL.createObjectURL(file));
         }
 
         methods.trigger(BASIC_INFO_LOGO);

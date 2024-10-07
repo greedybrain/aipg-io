@@ -1,1 +1,0 @@
-ALTER TABLE "appUsers" ALTER COLUMN "avatarUrl" SET DEFAULT '';

@@ -20,6 +20,7 @@ const TierOfferingField = () => {
         offerings,
         setEditMode,
         addOffering,
+        addBulkOfferings,
         editOffering,
         updateOffering,
         deleteOffering,
@@ -49,7 +50,7 @@ const TierOfferingField = () => {
                     editMode={editMode}
                 />
                 <AddBulkOfferingsButton
-                    addBulkOfferings={() => null}
+                    addBulkOfferings={addBulkOfferings}
                     offering={offering}
                 />
                 <CancelEditButton

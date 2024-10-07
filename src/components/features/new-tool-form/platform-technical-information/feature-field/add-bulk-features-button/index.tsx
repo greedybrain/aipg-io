@@ -7,7 +7,7 @@ interface Props {
 
 const AddBulkFeaturesButton = ({ feature, addBulkFeatures }: Props) => {
     if (!feature) return null;
-    if (!feature.includes(",")) return null;
+    if (!feature.includes("|")) return null;
 
     return (
         <Button type="button" variant={"tertiary"}>

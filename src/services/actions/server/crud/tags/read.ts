@@ -1,10 +1,10 @@
 "use server";
 
 import { db } from "@/db";
-import { withTryCatch } from "../_helpers/withTryCatch";
+import { withTryCatch } from "@/utils/error-handling/withTryCatch";
 
 export const server_readTags = async () => {
-    const res = await withTryCatch(
+    const response = await withTryCatch(
         () =>
             db.query.Tag.findMany({
                 orderBy: (fields, { asc }) => asc(fields.name),
@@ -12,5 +12,5 @@ export const server_readTags = async () => {
         "Tags found",
     );
 
-    return res.data;
+    return response;
 };

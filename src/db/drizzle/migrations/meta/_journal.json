@@ -5,36 +5,29 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1726422430400,
-      "tag": "0000_mighty_outlaw_kid",
+      "when": 1727992369987,
+      "tag": "0000_supreme_thunderbolts",
       "breakpoints": true
     },
     {
       "idx": 1,
       "version": "7",
-      "when": 1726440752399,
-      "tag": "0001_bored_talos",
+      "when": 1728246651592,
+      "tag": "0001_sticky_venus",
       "breakpoints": true
     },
     {
       "idx": 2,
       "version": "7",
-      "when": 1726932248513,
-      "tag": "0002_smart_spot",
+      "when": 1728308440625,
+      "tag": "0002_cynical_metal_master",
       "breakpoints": true
     },
     {
       "idx": 3,
       "version": "7",
-      "when": 1727744583888,
-      "tag": "0003_tearful_tusk",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1727826537757,
-      "tag": "0004_abandoned_mephistopheles",
+      "when": 1728332369167,
+      "tag": "0003_clear_otto_octavius",
       "breakpoints": true
     }
   ]

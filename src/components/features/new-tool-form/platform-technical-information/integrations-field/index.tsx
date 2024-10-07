@@ -14,7 +14,7 @@ const IntegrationsField = () => {
     const [showForm, setShowForm] = useState<boolean>(false);
     const ulRef = useRef<HTMLUListElement>(null);
     const {
-        integrations,
+        integrationsRecord,
         selectedIntegrations,
         showList,
         handleHideList,
@@ -40,9 +40,11 @@ const IntegrationsField = () => {
                     onClick={handleShowList}
                 >
                     <span className={cn("font-medium")}>
-                        {!selectedIntegrations.length
+                        {!Object.values(selectedIntegrations).length
                             ? "Select integrations..."
-                            : `${selectedIntegrations.length} selected`}
+                            : `${
+                                  Object.values(selectedIntegrations).length
+                              } selected`}
                     </span>
                     <ChevronsUpDown />
                 </Group>
@@ -54,7 +56,7 @@ const IntegrationsField = () => {
                     )}
                     ref={ulRef}
                 >
-                    {Object.values(integrations).map((integration) => {
+                    {Object.values(integrationsRecord).map((integration) => {
                         return (
                             <li
                                 key={integration.id}

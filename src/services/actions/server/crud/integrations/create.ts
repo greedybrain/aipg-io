@@ -3,7 +3,7 @@
 import { Integration, TInsertIntegration } from "@/db/drizzle/schemas";
 
 import { db } from "@/db";
-import { withTryCatch } from "../_helpers/withTryCatch";
+import { withTryCatch } from "@/utils/error-handling/withTryCatch";
 
 export const server_createIntegration = async ({
     name,

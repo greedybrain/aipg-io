@@ -27,7 +27,7 @@ export const AppUser = pgTable("appUsers", {
         withTimezone: true,
     }).defaultNow(),
     pastHire: boolean("pastHire").notNull().default(false),
-    userId: text("userId").unique().notNull(),
+    userId: uuid("userId").unique().notNull(),
 });
 
 export const AppUserRelations = relations(AppUser, ({ many, one }) => ({}));

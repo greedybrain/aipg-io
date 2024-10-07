@@ -9,16 +9,18 @@ import {
     relations,
     sql,
 } from "drizzle-orm";
-import { TCreatedBy, TPricingModel } from "@/types/ai-tools";
 import {
     boolean,
-    jsonb,
     pgEnum,
     pgTable,
     text,
     timestamp,
     uniqueIndex,
+    uuid,
 } from "drizzle-orm/pg-core";
+
+import { AIToolCreator } from "./ai-tool-creators";
+import { AIToolPriceModel } from "./ai-tool-price-models";
 
 export const platformsEnum = pgEnum("platformsenum", [
     "Web-based",
@@ -34,12 +36,12 @@ export const operatingSystemsEnum = pgEnum("operatingsystemsenum", [
 ]);
 
 const metadata = {
-    id: text("id")
+    id: uuid("id")
         .primaryKey()
-        .$defaultFn(() => crypto.randomUUID()),
+        .default(sql`gen_random_uuid()`),
     name: text("name").notNull(),
     developerOrCompanyName: text("developerOrCompanyName").notNull(),
-    officialWebsite: text("officialWebsite").notNull(),
+    officialWebsiteURL: text("officialWebsiteURL").notNull(),
     logo: text("logo").notNull(),
     description: text("description").notNull(),
 };
@@ -49,7 +51,7 @@ const mediaResources = {
         .array()
         .notNull()
         .default(sql`'{}'::text[]`),
-    videoUrls: text("videoUrls")
+    videoURLs: text("videoURLs")
         .array()
         .notNull()
         .default(sql`'{}'::text[]`),
@@ -85,44 +87,17 @@ const technicalDetails = {
         .default(sql`'{}'::text[]`),
 };
 
-const pricing = {
-    pricingModel: jsonb("pricingModel")
-        .$type<TPricingModel>()
-        .notNull()
-        .default(
-            sql`'{
-            "isFreeToUse": false,
-            "hasFreeTierOrTrial": false,
-            "oneTimePurchasePrice": null,
-            "promotionDescription": null,
-            "tiers": []
-        }'::jsonb`,
-        ),
-    linkToPricingInfo: text("linkToPricingInfo").default(""),
-};
-
 const affiliateAndApiResources = {
-    apiResource: text("apiResource").default(""),
-    affiliateOrPartnershipResource: text(
-        "affiliateOrPartnershipResource",
-    ).default(""),
-    customAffiliateLink: text("customAffiliateLink").default(""),
+    apiDocumentationURL: text("apiDocumentationURL").default(""),
+    affiliateResourceURL: text("affiliateResourceURL").default(""),
+    customAffiliateURL: text("customAffiliateURL").default(""),
 };
 
 const admin = {
     createdAt: timestamp("createdAt").defaultNow(),
-    createdBy: jsonb("pricingModel")
-        .$type<TCreatedBy>()
-        .notNull()
-        .default(
-            sql`'{
-                "userId": null,
-                "email": null,
-                "name": null,
-                "pastHire": false,
-                "role": "DEFAULT"
-            }'::jsonb`,
-        ),
+    creatorId: uuid("creatorId").references(() => AIToolCreator.id, {
+        onDelete: "cascade",
+    }),
     updatedAt: timestamp("updatedAt").defaultNow(),
     updatedBy: text("updatedBy")
         .array()
@@ -138,7 +113,6 @@ export const AITool = pgTable(
         ...metadata,
         ...mediaResources,
         ...appAndExtensions,
-        ...pricing,
         ...technicalDetails,
         ...affiliateAndApiResources,
         ...admin,
@@ -152,9 +126,11 @@ export const AITool = pgTable(
 );
 
 // Relations
-export const AIToolRelations = relations(AITool, ({ many }) => ({
+export const AIToolRelations = relations(AITool, ({ one, many }) => ({
     aiToolTags: many(AIToolTag),
     aiToolIntegrations: many(AIToolIntegration),
+    aiToolPriceModel: one(AIToolPriceModel),
+    aiToolCreator: one(AIToolCreator),
 }));
 
 // Inferences

@@ -9,9 +9,7 @@ import { cn } from "@/utils/tailwind/tw-merge";
 import { getUser } from "@/services/actions/server/auth/authenticate";
 
 const Header = async () => {
-    const {
-        user: { appUser },
-    } = await getUser();
+    const { data } = await getUser();
 
     return (
         <header>
@@ -25,14 +23,14 @@ const Header = async () => {
                     }}
                 />
                 <Group className={cn("flex items-center gap-x-3")}>
-                    <NavItemsLarge userId={appUser?.id} />
-                    {appUser?.id ? (
-                        <UserAvatar avatarUrl={appUser.avatarUrl} />
+                    <NavItemsLarge userId={data?.appUser?.id} />
+                    {data?.appUser?.id ? (
+                        <UserAvatar avatarUrl={data?.appUser.avatarUrl} />
                     ) : (
                         <SignupButton />
                     )}
                     <div className={cn("sm:hidden")}>
-                        <DrawerMenuTrigger userId={appUser?.id} />
+                        <DrawerMenuTrigger userId={data?.appUser?.id} />
                     </div>
                 </Group>
             </FixedContainer>

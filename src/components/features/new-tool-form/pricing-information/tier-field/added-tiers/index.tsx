@@ -15,7 +15,7 @@ const AddedTiers = ({ editMode, editTier, deleteTier }: Props) => {
     return (
         <Group className={cn("mt-10")}>
             <p className={cn("underline font-bold")}>Added tiers</p>
-            <ul className={cn("py-3")}>
+            <ul className={cn("py-3 space-y-5")}>
                 {tiers.map((tier, idx) => {
                     return (
                         <li
@@ -45,7 +45,7 @@ const AddedTiers = ({ editMode, editTier, deleteTier }: Props) => {
                                         {tier.description}
                                     </span>
                                 </p>
-                                {tier.price?.monthly && (
+                                {tier.monthlyPrice && (
                                     <p className={cn("text-xl font-bold")}>
                                         Monthly Price:{" "}
                                         <span
@@ -53,11 +53,11 @@ const AddedTiers = ({ editMode, editTier, deleteTier }: Props) => {
                                                 "text-[16px] font-normal",
                                             )}
                                         >
-                                            ${tier.price.monthly}
+                                            ${tier.monthlyPrice}
                                         </span>
                                     </p>
                                 )}
-                                {tier.price?.annually && (
+                                {tier.annualPrice && (
                                     <p className={cn("text-xl font-bold")}>
                                         Annual Price:{" "}
                                         <span
@@ -65,7 +65,7 @@ const AddedTiers = ({ editMode, editTier, deleteTier }: Props) => {
                                                 "text-[16px] font-normal",
                                             )}
                                         >
-                                            ${tier.price.annually}
+                                            ${tier.annualPrice}
                                         </span>
                                     </p>
                                 )}

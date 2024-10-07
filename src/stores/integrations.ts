@@ -7,7 +7,7 @@ import { server_readIntegrations } from "@/services/actions/server/crud/integrat
 import { uploadFileOrFiles } from "@/services/actions/client/file-manager/uploadFileOrFiles";
 
 interface InitialState {
-    integrations: Record<string, TSelectIntegration>;
+    integrationsRecord: Record<string, TSelectIntegration>;
     selectedIntegrations: Record<string, TSelectIntegration>;
     loadAndSetIntegrations: () => Promise<void>;
     addNew: (
@@ -19,20 +19,18 @@ interface InitialState {
     }>;
     addSelection: (newSelection: TSelectIntegration) => void;
     removeIntegration: (id: string) => void;
+    resetSelected: () => void;
 }
 
 const useIntegrationsStore = create<InitialState>((set) => ({
-    integrations: {},
+    integrationsRecord: {},
     selectedIntegrations: {},
     loadAndSetIntegrations: async () => {
-        const integrations = await server_readIntegrations();
+        const { data: integrations } = await server_readIntegrations();
         if (!integrations) return;
 
         set(() => ({
-            integrations: convertArrToRecord(
-                sortIntegrations(integrations),
-                "nameLower",
-            ),
+            integrationsRecord: convertArrToRecord(integrations, "nameLower"),
         }));
     },
     addNew: async (name, file) => {
@@ -56,9 +54,9 @@ const useIntegrationsStore = create<InitialState>((set) => ({
         if (data && success) {
             set((state) => ({
                 ...state,
-                integrations: convertArrToRecord(
+                integrationsRecord: convertArrToRecord(
                     sortIntegrations([
-                        ...Object.values(state.integrations),
+                        ...Object.values(state.integrationsRecord),
                         data,
                     ]),
                     "nameLower",
@@ -92,6 +90,7 @@ const useIntegrationsStore = create<InitialState>((set) => ({
                 "nameLower",
             ),
         })),
+    resetSelected: () => set(() => ({ selectedIntegrations: {} })),
 }));
 
 const sortIntegrations = (integrations: TSelectIntegration[]) =>

@@ -66,7 +66,7 @@ const useAuthStore = create<InitialState>((set) => ({
         status: "RESET COMPLETE",
     },
     client_login: async ({ email, password }) => {
-        const { success, message, user } = await authenticate(
+        const { success, message, data } = await authenticate(
             "signInWithPassword",
             {
                 email,
@@ -74,16 +74,16 @@ const useAuthStore = create<InitialState>((set) => ({
             },
         );
 
-        set(() => ({ authCTX: user }));
+        set(() => ({ authCTX: data }));
 
         return {
             success,
             message,
-            user,
+            data,
         };
     },
     client_signup: async ({ email, password, fullName }) => {
-        const { success, message, user } = await authenticate(
+        const { success, message, data } = await authenticate(
             "signUp",
             {
                 email,
@@ -94,17 +94,17 @@ const useAuthStore = create<InitialState>((set) => ({
             },
         );
 
-        set(() => ({ authCTX: user }));
+        set(() => ({ authCTX: data }));
 
         return {
             success,
             message,
-            user,
+            data,
         };
     },
     client_loadUser: async () => {
-        const { user } = await getUser();
-        user.authUser && set(() => ({ authCTX: user }));
+        const { data: user } = await getUser();
+        user && user.authUser && set(() => ({ authCTX: user }));
     },
     client_logoutUser: async () => {
         const { success } = await logout();

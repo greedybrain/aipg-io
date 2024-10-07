@@ -2,20 +2,13 @@ import { z } from "zod";
 
 const tierSchema = z
     .object({
-        name: z.string().nullable(),
-        price: z
-            .object({
-                monthly: z.string().nullable().default(null),
-                annually: z.string().nullable().default(null),
-            })
-            .nullable()
-            .default(null),
+        name: z.string(),
+        annualPrice: z.string().nullable().default(null),
+        monthlyPrice: z.string().nullable().default(null),
         description: z
             .string()
-            .max(255, "Description must not exceed 255 characters")
-            .nullable()
-            .default(null),
-        offering: z.string().nullable().default(null),
+            .max(255, "Description must not exceed 255 characters"),
+        offering: z.string(),
         offerings: z
             .array(z.string())
             .refine(
@@ -71,20 +64,14 @@ export const AiToolSchema = z.object({
             .string()
             .url("Invalid URL format")
             .min(1, "Official website is required"),
-        logo: z.object({
-            size: z.number().max(2 * 1024 * 1024, "Logo must not exceed 2MB"),
-            type: z
-                .string()
-                .refine(
-                    (type) => ["image/jpeg", "image/png"].includes(type),
-                    "Only JPEG and PNG formats are supported",
-                ),
-            name: z
-                .string()
-                .min(1, "File name is required")
-                .max(255, "File name must not exceed 255 characters"),
-            logoPreview: z.string().optional(),
-        }),
+        logo: z
+            .instanceof(File)
+            .refine((file) => file.size <= 2 * 1024 * 1024, {
+                message: "Logo must not exceed 2MB",
+            })
+            .refine((file) => ["image/png", "image/jpeg"].includes(file.type), {
+                message: "Only JPEG AND PNG formats are supported",
+            }),
         description: z
             .string()
             .min(
@@ -125,30 +112,22 @@ export const AiToolSchema = z.object({
         tier: tierSchema,
         tiers: z.array(tierSchema),
         priceInfoURL: z.string().url("Invalid URL format").nullable(),
+        minPrice: z.string().nullable().default(null),
+        maxPrice: z.string().nullable().default(null),
     }),
 
     // ================ Media & Resources ==================
     mediaAndResources: z.object({
         webImages: z.array(
-            z.object({
-                size: z
-                    .number()
-                    .max(4 * 1024 * 1024, "Logo must not exceed 4MB"),
-                type: z
-                    .string()
-                    .refine(
-                        (type) =>
-                            ["image/jpeg", "image/png", "image/webp"].includes(
-                                type,
-                            ),
-                        "Only JPEG and PNG formats are supported",
-                    ),
-                name: z
-                    .string()
-                    .min(1, "File name is required")
-                    .max(255, "File name must not exceed 255 characters"),
-                webImagePreview: z.string().optional(),
-            }),
+            z
+                .instanceof(File)
+                .refine((file) => file.size <= 3 * 1024 * 1024, {
+                    message: "Web image must not exceed 3MB",
+                })
+                .refine(
+                    (file) => ["image/png", "image/jpeg"].includes(file.type),
+                    { message: "Only JPEG AND PNG formats are supported" },
+                ),
         ),
         videoURL: z.string().nullable().default(null),
         videoURLs: z.array(z.string()).default([]),
@@ -182,12 +161,7 @@ export const defaultValues: z.infer<typeof AiToolSchema> = {
         name: "",
         developerOrCompanyName: "",
         officialWebsiteURL: "",
-        logo: {
-            size: 0,
-            type: "",
-            name: "",
-            logoPreview: undefined,
-        },
+        logo: {} as File,
         description: "",
     },
 
@@ -199,7 +173,7 @@ export const defaultValues: z.infer<typeof AiToolSchema> = {
         features: [], // Empty array of features
     },
 
-    // ================ Pricing Information ==================
+    // ============= === Pricing Information ==================
     pricingInfo: {
         isFreeToUse: false, // Default is not free
         hasFreeTierOrTrial: false, // Default no free tier or trial
@@ -207,21 +181,21 @@ export const defaultValues: z.infer<typeof AiToolSchema> = {
         promotionDescription: null, // Default null for promotion description
         tier: {
             name: "",
-            price: {
-                monthly: "",
-                annually: "",
-            },
+            annualPrice: "",
+            monthlyPrice: "",
             description: "",
             offering: "",
             offerings: [],
         },
         tiers: [], // Empty array for tiers
         priceInfoURL: null, // Default null for price info URL
+        minPrice: null,
+        maxPrice: null,
     },
 
     // ================ Media & Resources ==================
     mediaAndResources: {
-        webImages: [], // Empty array for web images
+        webImages: [] as File[], // Empty array for web images
         videoURL: "",
         videoURLs: [], // Empty array for video URLs
     },

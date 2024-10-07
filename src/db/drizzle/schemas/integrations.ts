@@ -2,13 +2,18 @@ import {
     AIToolIntegration,
     TSelectAIToolIntegrationWithRelations,
 } from "./ai-tool-integrations";
-import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import {
+    InferInsertModel,
+    InferSelectModel,
+    relations,
+    sql,
+} from "drizzle-orm";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 export const Integration = pgTable("integrations", {
-    id: text("id")
+    id: uuid("id")
         .primaryKey()
-        .$defaultFn(() => crypto.randomUUID()),
+        .default(sql`gen_random_uuid()`),
     name: text("name").notNull(),
     nameLower: text("nameLower").notNull(),
     branding: text("branding").default(""),

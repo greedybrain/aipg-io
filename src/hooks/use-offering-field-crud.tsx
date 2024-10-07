@@ -58,6 +58,20 @@ const useOfferingFieldCrud = () => {
         );
     };
 
+    const addBulkOfferings = () => {
+        const bulkOffering = offering.split(",");
+
+        if (bulkOffering.length > 0) {
+            const existingOfferings = getExistingOfferings();
+            methods.setValue("pricingInfo.tier.offerings", [
+                ...existingOfferings,
+                ...bulkOffering,
+            ]);
+        }
+
+        resetOffering();
+    };
+
     // Helpers
     const getExistingOfferings = () =>
         methods.getValues("pricingInfo.tier.offerings");
@@ -75,6 +89,7 @@ const useOfferingFieldCrud = () => {
         offerings,
         setEditMode,
         addOffering,
+        addBulkOfferings,
         editOffering,
         updateOffering,
         deleteOffering,

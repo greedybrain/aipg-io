@@ -52,7 +52,6 @@ export const BASIC_INFO_LOGO = "basicInfo.logo";
 export const BASIC_INFO_LOGO_SIZE = "basicInfo.logo.size";
 export const BASIC_INFO_LOGO_TYPE = "basicInfo.logo.type";
 export const BASIC_INFO_LOGO_NAME = "basicInfo.logo.name";
-export const BASIC_INFO_LOGO_PREVIEW = "basicInfo.logo.logoPreview";
 export const BASIC_INFO_DESCRIPTION = "basicInfo.description";
 
 // Platform & Technical Information
@@ -82,6 +81,8 @@ export const PRICING_INFO_TIER_OFFERING = "pricingInfo.tier.offering";
 export const PRICING_INFO_TIER_OFFERINGS = "pricingInfo.tier.offerings";
 export const PRICING_INFO_TIERS = "pricingInfo.tiers";
 export const PRICING_INFO_PRICE_INFO_URL = "pricingInfo.priceInfoURL";
+export const PRICING_INFO_MAX_PRICE = "pricingInfo.maxPrice";
+export const PRICING_INFO_MIN_PRICE = "pricingInfo.minPrice";
 
 // Media & Resources
 export const MEDIA_RESOURCES_WEB_IMAGES = "mediaAndResources.webImages";

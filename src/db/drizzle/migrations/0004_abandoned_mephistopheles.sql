@@ -1,1 +1,0 @@
-ALTER TABLE "integrations" ALTER COLUMN "nameLower" SET NOT NULL;

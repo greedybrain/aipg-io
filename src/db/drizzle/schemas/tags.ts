@@ -1,12 +1,17 @@
-import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import {
+    InferInsertModel,
+    InferSelectModel,
+    relations,
+    sql,
+} from "drizzle-orm";
+import { pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { AIToolTag } from "./ai-tool-tags";
 
 export const Tag = pgTable("tags", {
-    id: text("id")
+    id: uuid("id")
         .primaryKey()
-        .$defaultFn(() => crypto.randomUUID()),
+        .default(sql`gen_random_uuid()`),
     category: text("category").notNull(),
     categoryLower: text("categoryLower").notNull(),
     name: text("name").notNull(),

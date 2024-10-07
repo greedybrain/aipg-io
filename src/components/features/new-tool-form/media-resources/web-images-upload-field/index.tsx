@@ -5,8 +5,10 @@ import { MEDIA_RESOURCES_WEB_IMAGES } from "@/constants";
 import { Upload } from "lucide-react";
 import { cn } from "@/utils/tailwind/tw-merge";
 import { useAiToolFormContext } from "@/hooks/use-ai-tool-form-context";
+import { useState } from "react";
 
 const WebImagesUploadField = () => {
+    const [webImagesPreview, setWebImagesPreview] = useState<string[]>([]);
     const methods = useAiToolFormContext();
     const webImages = methods.getValues(MEDIA_RESOURCES_WEB_IMAGES);
 
@@ -15,17 +17,8 @@ const WebImagesUploadField = () => {
 
         if (fileList) {
             const files = Array.from(fileList);
-            methods.setValue(MEDIA_RESOURCES_WEB_IMAGES, [
-                ...files.map((file) => {
-                    const { name, type, size } = file;
-                    return {
-                        name,
-                        type,
-                        size,
-                        webImagePreview: URL.createObjectURL(file),
-                    };
-                }),
-            ]);
+            methods.setValue(MEDIA_RESOURCES_WEB_IMAGES, files);
+            setWebImagesPreview(files.map((file) => URL.createObjectURL(file)));
         }
 
         methods.trigger(MEDIA_RESOURCES_WEB_IMAGES);
@@ -51,7 +44,7 @@ const WebImagesUploadField = () => {
                                 className={cn("relative w-full h-[150px]")}
                             >
                                 <Image
-                                    src={image.webImagePreview ?? ""}
+                                    src={webImagesPreview[idx] ?? ""}
                                     alt="company logo preview"
                                     fill
                                     className={cn(

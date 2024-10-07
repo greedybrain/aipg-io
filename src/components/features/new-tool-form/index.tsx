@@ -26,6 +26,8 @@ import IsFreeToUseCheckboxField from "./pricing-information/is-free-to-use-check
 import LinuxPackageURLField from "./app-extension-urls/linux-package-url-field";
 import LogoUploadField from "./basic-information/logo-upload-field";
 import MacOSAppStoreURLField from "./app-extension-urls/macos-app-store-url-field";
+import MaxPriceField from "./pricing-information/max-price-field";
+import MinPriceField from "./pricing-information/min-price-field";
 import OfficialWebsiteURLField from "./basic-information/official-website-url-field";
 import OneTimePurchasePriceField from "./pricing-information/one-time-purhcase-price-field";
 import OperatingSystemsCheckboxField from "./platform-technical-information/operating-systems-checkbox-field";
@@ -41,6 +43,11 @@ import VideoURLFieldContextProvider from "@/contexts/video-url-field-context";
 import WebImagesUploadField from "./media-resources/web-images-upload-field";
 import WindowsStoreURLField from "./app-extension-urls/window-store-url-field";
 import { cn } from "@/utils/tailwind/tw-merge";
+import { notify } from "@/utils/alerts/toast";
+import useAiToolsStore from "@/stores/ai-tools";
+import useIntegrationsStore from "@/stores/integrations";
+import useTagsStore from "@/stores/tags";
+import { useTransition } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -48,18 +55,79 @@ const fieldsetStyles =
     "border-2 border-app-tertiary/25 p-5 space-y-10 rounded-lg";
 
 const NewToolForm = () => {
+    const [isPending, startTransition] = useTransition();
+    const { addNew } = useAiToolsStore((state) => ({
+        addNew: state.addNew,
+    }));
+    const { selectedTags, resetSelectedTags } = useTagsStore((state) => ({
+        selectedTags: state.selectedTags,
+        resetSelectedTags: state.resetSelected,
+    }));
+    const { selectedIntegrations, resetSelectedIntegrations } =
+        useIntegrationsStore((state) => ({
+            selectedIntegrations: state.selectedIntegrations,
+            resetSelectedIntegrations: state.resetSelected,
+        }));
     const methods = useForm<z.infer<typeof AiToolSchema>>({
         resolver: zodResolver(AiToolSchema),
         defaultValues: defaultAiToolValues,
     });
 
-    // console.log("Values: ", methods.getValues());
-    // console.log("Errors: ", methods.formState.errors);
-
     const isFreeToUse = methods.watch(PRICING_INFO_IS_FREE);
 
     const onSubmit: SubmitHandler<typeof defaultAiToolValues> = (data) => {
-        console.log("Data Submitted: ", data);
+        startTransition(async () => {
+            const {
+                affiliateAndApiInfo,
+                appAndExtURLs,
+                basicInfo,
+                mediaAndResources,
+                platformAndTechnicalInfo,
+                pricingInfo,
+            } = data;
+
+            const { message, success } = await addNew({
+                affiliateResourceURL: affiliateAndApiInfo.affiliateResourceURL,
+                androidAppURL: appAndExtURLs.androidAppURL,
+                apiDocumentationURL: affiliateAndApiInfo.affiliateResourceURL,
+                apkDownloadURL: appAndExtURLs.apkDownloadURL,
+                chromeExtensionURL: appAndExtURLs.chromeExtensionURL,
+                customAffiliateURL: affiliateAndApiInfo.customAffiliateURL,
+                description: basicInfo.description,
+                developerOrCompanyName: basicInfo.developerOrCompanyName,
+                edgeExtensionURL: appAndExtURLs.edgeExtensionURL,
+                features: platformAndTechnicalInfo.features,
+                file: basicInfo.logo,
+                files: mediaAndResources.webImages,
+                firefoxAddonURL: appAndExtURLs.firefoxAddonURL,
+                inReview: true,
+                integrations: Object.values(selectedIntegrations),
+                iosAppURL: appAndExtURLs.iosAppURL,
+                linuxPackageURL: appAndExtURLs.linuxPackageURL,
+                macosAppStoreURL: appAndExtURLs.macosAppStoreURL,
+                name: basicInfo.name,
+                officialWebsiteURL: basicInfo.officialWebsiteURL,
+                operatingSystems: platformAndTechnicalInfo.operatingSystems,
+                platforms: platformAndTechnicalInfo.platforms,
+                safariExtensionURL: appAndExtURLs.safariExtensionURL,
+                pricingInfo,
+                tags: Object.values(selectedTags),
+                videoURLs: mediaAndResources.videoURLs,
+                windowsStoreURL: appAndExtURLs.windowsStoreURL,
+            });
+
+            notify({
+                type: success ? "success" : "error",
+                message,
+                id: success ? "create-tool-success" : "create-tool-fail",
+            });
+
+            if (success) {
+                methods.reset();
+                resetSelectedTags();
+                resetSelectedIntegrations();
+            }
+        });
     };
 
     return (
@@ -102,6 +170,8 @@ const NewToolForm = () => {
                                 <HasFreeTierOrTrial />
                                 <OneTimePurchasePriceField />
                                 <TiersField />
+                                <MaxPriceField />
+                                <MinPriceField />
                                 <PriceInfoURLField />
                             </>
                         )}
@@ -145,7 +215,7 @@ const NewToolForm = () => {
                             "w-full h-[60px] text-[16px] relative top-10",
                         )}
                     >
-                        Submit for review
+                        {isPending ? "Submitting..." : "Submit for review"}
                     </Button>
                 </form>
             </Form>

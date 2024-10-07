@@ -1,16 +1,21 @@
 import { AITool, TSelectAIToolBase } from "./ai-tools";
-import { InferInsertModel, InferSelectModel, relations } from "drizzle-orm";
+import {
+    InferInsertModel,
+    InferSelectModel,
+    relations,
+    sql,
+} from "drizzle-orm";
 import { TSelectTag, Tag } from "./tags";
-import { pgTable, text, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, timestamp, uuid } from "drizzle-orm/pg-core";
 
 export const AIToolTag = pgTable("aiToolTags", {
-    id: text("id")
+    id: uuid("id")
         .primaryKey()
-        .$defaultFn(() => crypto.randomUUID()),
-    aiToolId: text("aiToolId")
+        .default(sql`gen_random_uuid()`),
+    aiToolId: uuid("aiToolId")
         .references(() => AITool.id, { onDelete: "cascade" })
         .notNull(),
-    tagId: text("tagId")
+    tagId: uuid("tagId")
         .references(() => Tag.id, { onDelete: "cascade" })
         .notNull(),
     createdAt: timestamp("createdAt").defaultNow().notNull(),

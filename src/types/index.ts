@@ -6,7 +6,7 @@ import { TSelectAppUser } from "@/db/drizzle/schemas/app-users";
 export type TAuthActionResponse = {
     success: boolean;
     message: string;
-    user:
+    data:
         | {
               authUser: User;
               appUser: TSelectAppUser;
@@ -14,7 +14,8 @@ export type TAuthActionResponse = {
         | {
               authUser: undefined;
               appUser: undefined;
-          };
+          }
+        | undefined;
 };
 
 // AUTH

@@ -6,13 +6,13 @@ import useIntegrationsStore from "@/stores/integrations";
 const useIntegrations = () => {
     const [showList, setShowList] = useState<boolean>(false);
     const {
-        integrations,
+        integrationsRecord,
         selectedIntegrations,
         loadAndSetIntegrations,
         addSelection,
         removeIntegration,
     } = useIntegrationsStore((state) => ({
-        integrations: state.integrations,
+        integrationsRecord: state.integrationsRecord,
         selectedIntegrations: state.selectedIntegrations,
         loadAndSetIntegrations: state.loadAndSetIntegrations,
         addSelection: state.addSelection,
@@ -53,7 +53,7 @@ const useIntegrations = () => {
         );
 
     return {
-        integrations,
+        integrationsRecord,
         selectedIntegrations,
         showList,
         handleAddOrRemoveIntegration,

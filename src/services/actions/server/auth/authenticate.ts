@@ -12,8 +12,8 @@ import { authErrorMessages } from "@/utils/data/error-codes-and-messages/auth-er
 import { createClient } from "@/utils/supabase/server";
 import { db } from "@/db";
 import { eq } from "drizzle-orm";
-import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 import { handleAuthFlow } from "./helpers";
+import { withTryCatch } from "@/utils/error-handling/withTryCatch";
 
 type TOtherCredentials = {
     fullName: string;
@@ -29,7 +29,7 @@ export const authenticate = async <T extends TAuthFlow>(
         : SignInWithPasswordlessCredentials,
     otherCredentials?: TOtherCredentials,
 ): Promise<TAuthActionResponse> => {
-    try {
+    const response = await withTryCatch(async () => {
         const {
             data: { user },
             error,
@@ -69,24 +69,16 @@ export const authenticate = async <T extends TAuthFlow>(
 
         if (!appUser) throw new Error("User was never created");
 
-        return {
-            success: true,
-            message: "Authentication successful",
-            user: { authUser: user, appUser },
-        };
-    } catch (error) {
-        return {
-            success: false,
-            message: getErrorMessage(error),
-            user: { authUser: undefined, appUser: undefined },
-        };
-    }
+        return { authUser: user, appUser };
+    }, "Authentication successful");
+
+    return response;
 };
 
 export const getUser = async (): Promise<TAuthActionResponse> => {
-    try {
-        const supabase = createClient();
+    const supabase = createClient();
 
+    const response = await withTryCatch(async () => {
         const {
             data: { user },
             error,
@@ -110,16 +102,27 @@ export const getUser = async (): Promise<TAuthActionResponse> => {
 
         if (!appUser) throw new Error("User was never created");
 
-        return {
-            success: true,
-            message: "User found successfully",
-            user: { authUser: user, appUser },
-        };
-    } catch (error) {
-        return {
-            success: false,
-            message: getErrorMessage(error),
-            user: { authUser: undefined, appUser: undefined },
-        };
-    }
+        return { authUser: user, appUser };
+    }, "User found successfully");
+
+    return response;
+};
+
+export const checkIfAuthorized = async () => {
+    const response = await withTryCatch<TAuthActionResponse["data"]>(
+        async () => {
+            const { data } = await getUser();
+
+            if (data) {
+                const { appUser } = data;
+                if (appUser && appUser.role === "DEFAULT")
+                    throw new Error("You are not authorized to do that");
+            }
+
+            return data;
+        },
+        "Authorized",
+    );
+
+    return response;
 };

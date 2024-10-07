@@ -9,13 +9,14 @@ interface InitialState {
     loadAndSetTags: () => Promise<void>;
     addSelection: (tag: TSelectTag) => void;
     removeTag: (id: string) => void;
+    resetSelected: () => void;
 }
 
 const useTagsStore = create<InitialState>((set) => ({
     tagsRecord: {},
     selectedTags: {},
     loadAndSetTags: async () => {
-        const tags = await server_readTags();
+        const { data: tags } = await server_readTags();
         if (!tags) return;
 
         set(() => ({
@@ -40,6 +41,7 @@ const useTagsStore = create<InitialState>((set) => ({
                 "nameLower",
             ),
         })),
+    resetSelected: () => set(() => ({ selectedTags: {} })),
 }));
 
 const sortTags = (tags: TSelectTag[]) =>

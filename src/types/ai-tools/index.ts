@@ -1,25 +1,23 @@
 import { UserRole } from "../app-users";
 
 export type TTier = {
-    name: string | null;
-    description: string | null;
-    offering: string | null;
+    name: string;
+    description: string;
+    offering: string;
     offerings: string[];
-    price: {
-        monthly: string | null;
-        annually: string | null;
-    } | null;
+    annualPrice: string | null;
+    monthlyPrice: string | null;
 };
 
 export type TPricingModel = {
     isFreeToUse: boolean;
     hasFreeTierOrTrial: boolean;
-    oneTimePurchase?: string;
+    oneTimePurchasePrice?: string | null;
     tiers?: TTier[];
-    minPrice: number;
-    maxPrice: number;
-    priceInfoUrl: string;
-    promotionDescription?: string;
+    minPrice: string | null;
+    maxPrice: string | null;
+    priceInfoURL: string | null;
+    promotionDescription: string | null;
 };
 
 export type TCreatedBy = {

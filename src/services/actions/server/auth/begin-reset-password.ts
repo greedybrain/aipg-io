@@ -5,13 +5,14 @@ import { TAuthActionResponse, TAuthResetCtx } from "@/types";
 import { UPDATE_PASSWORD_ROUTE } from "@/constants";
 import { authErrorMessages } from "@/utils/data/error-codes-and-messages/auth-error-messages";
 import { createClient } from "@/utils/supabase/server";
-import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 import { headers } from "next/headers";
+import { withTryCatch } from "@/utils/error-handling/withTryCatch";
 
 export const server_resetPassword = async (
     resetCtx: TAuthResetCtx,
-): Promise<TAuthActionResponse> => {
-    try {
+): Promise<Omit<TAuthActionResponse, "data">> => {
+    let email: string = "";
+    const response = await withTryCatch(async () => {
         const supabase = createClient();
 
         const origin = headers().get("origin");
@@ -28,17 +29,7 @@ export const server_resetPassword = async (
 
             throw new Error(errorMessage);
         }
+    }, `We sent a password reset link to ${email}`);
 
-        return {
-            success: true,
-            message: `We sent a password reset link to ${email}`,
-            user: { authUser: undefined, appUser: undefined },
-        };
-    } catch (error) {
-        return {
-            success: false,
-            message: getErrorMessage(error),
-            user: { authUser: undefined, appUser: undefined },
-        };
-    }
+    return response;
 };

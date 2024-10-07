@@ -10,7 +10,7 @@ const AddBulkOfferingsButton = ({ offering, addBulkOfferings }: Props) => {
     if (!offering.includes(",")) return null;
 
     return (
-        <Button type="button" variant={"tertiary"}>
+        <Button type="button" variant={"tertiary"} onClick={addBulkOfferings}>
             Add bulk offerings
         </Button>
     );

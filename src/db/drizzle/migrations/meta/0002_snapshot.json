@@ -1,6 +1,6 @@
 {
-  "id": "a2f47347-9c1c-4024-84d6-4eae4a4ec427",
-  "prevId": "67794517-203e-4418-9662-a6555f81a980",
+  "id": "df09147e-6e18-4fb2-b4f9-f841aee2a368",
+  "prevId": "c1eb52d9-d909-4ca6-a15b-51419d42fd63",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -10,19 +10,20 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "aiToolId": {
           "name": "aiToolId",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
         "integrationId": {
           "name": "integrationId",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -79,19 +80,20 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "aiToolId": {
           "name": "aiToolId",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
         "tagId": {
           "name": "tagId",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         },
@@ -148,9 +150,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
@@ -164,8 +167,8 @@
           "primaryKey": false,
           "notNull": true
         },
-        "officialWebsite": {
-          "name": "officialWebsite",
+        "officialWebsiteURL": {
+          "name": "officialWebsiteURL",
           "type": "text",
           "primaryKey": false,
           "notNull": true
@@ -189,8 +192,8 @@
           "notNull": true,
           "default": "'{}'::text[]"
         },
-        "videoUrls": {
-          "name": "videoUrls",
+        "videoURLs": {
+          "name": "videoURLs",
           "type": "text[]",
           "primaryKey": false,
           "notNull": true,
@@ -271,14 +274,7 @@
           "type": "jsonb",
           "primaryKey": false,
           "notNull": true,
-          "default": "'{\n                \"userId\": null,\n                \"email\": null,\n                \"name\": null,\n                \"pastHire\": false,\n                \"role\": \"DEFAULT\"\n            }'::jsonb"
-        },
-        "linkToPricingInfo": {
-          "name": "linkToPricingInfo",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "''"
+          "default": "'{\n            \"isFreeToUse\": false,\n            \"hasFreeTierOrTrial\": false,\n            \"oneTimePurchasePrice\": null,\n            \"promotionDescription\": null,\n            \"tiers\": [],\n            \"priceInfoURL\": null,\n            \"minPrice\": null,\n            \"maxPrice\": null\n        }'::jsonb"
         },
         "platforms": {
           "name": "platforms",
@@ -301,22 +297,22 @@
           "notNull": true,
           "default": "'{}'::text[]"
         },
-        "apiResource": {
-          "name": "apiResource",
+        "apiDocumentationURL": {
+          "name": "apiDocumentationURL",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "default": "''"
         },
-        "affiliateOrPartnershipResource": {
-          "name": "affiliateOrPartnershipResource",
+        "affiliateResourceURL": {
+          "name": "affiliateResourceURL",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
           "default": "''"
         },
-        "customAffiliateLink": {
-          "name": "customAffiliateLink",
+        "customAffiliateURL": {
+          "name": "customAffiliateURL",
           "type": "text",
           "primaryKey": false,
           "notNull": false,
@@ -328,6 +324,12 @@
           "primaryKey": false,
           "notNull": false,
           "default": "now()"
+        },
+        "creatorId": {
+          "name": "creatorId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
         },
         "updatedAt": {
           "name": "updatedAt",
@@ -381,7 +383,21 @@
           "with": {}
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "aiTools_creatorId_aiToolCreators_id_fk": {
+          "name": "aiTools_creatorId_aiToolCreators_id_fk",
+          "tableFrom": "aiTools",
+          "tableTo": "aiToolCreators",
+          "columnsFrom": [
+            "creatorId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -446,7 +462,7 @@
         },
         "userId": {
           "name": "userId",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": false,
           "notNull": true
         }
@@ -470,9 +486,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "name": {
           "name": "name",
@@ -519,9 +536,10 @@
       "columns": {
         "id": {
           "name": "id",
-          "type": "text",
+          "type": "uuid",
           "primaryKey": true,
-          "notNull": true
+          "notNull": true,
+          "default": "gen_random_uuid()"
         },
         "category": {
           "name": "category",
@@ -564,6 +582,225 @@
       },
       "indexes": {},
       "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.aiToolPriceModels": {
+      "name": "aiToolPriceModels",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "aiToolId": {
+          "name": "aiToolId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "isFreeToUse": {
+          "name": "isFreeToUse",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "hasFreeTierOrTrial": {
+          "name": "hasFreeTierOrTrial",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "default": false
+        },
+        "oneTimePurchasePrice": {
+          "name": "oneTimePurchasePrice",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "minPrice": {
+          "name": "minPrice",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "maxPrice": {
+          "name": "maxPrice",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "priceInfoURL": {
+          "name": "priceInfoURL",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "promotionDescription": {
+          "name": "promotionDescription",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "''"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "aiToolPriceModels_aiToolId_aiTools_id_fk": {
+          "name": "aiToolPriceModels_aiToolId_aiTools_id_fk",
+          "tableFrom": "aiToolPriceModels",
+          "tableTo": "aiTools",
+          "columnsFrom": [
+            "aiToolId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.aiToolCreators": {
+      "name": "aiToolCreators",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "userId": {
+          "name": "userId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "aiToolCreators_userId_appUsers_userId_fk": {
+          "name": "aiToolCreators_userId_appUsers_userId_fk",
+          "tableFrom": "aiToolCreators",
+          "tableTo": "appUsers",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "userId"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.tiers": {
+      "name": "tiers",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "offerings": {
+          "name": "offerings",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": false,
+          "default": "'{}'::text[]"
+        },
+        "monthlyPrice": {
+          "name": "monthlyPrice",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "annualPrice": {
+          "name": "annualPrice",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "aiToolPriceModelId": {
+          "name": "aiToolPriceModelId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "tiers_aiToolPriceModelId_aiToolPriceModels_id_fk": {
+          "name": "tiers_aiToolPriceModelId_aiToolPriceModels_id_fk",
+          "tableFrom": "tiers",
+          "tableTo": "aiToolPriceModels",
+          "columnsFrom": [
+            "aiToolPriceModelId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     }

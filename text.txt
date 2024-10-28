@@ -1,0 +1,54 @@
+An AI Tool has the following columns:
+
+1. id: this is auto-generated
+2. name: the tools name
+3. logo: you would need to upload the logo to my supabase storage in order to get the url. Once you have the url, you will enter that here under the logo column.
+4. description: tools description and/or purpose
+5. features: this should be stored as an array of strings. For example:
+
+["Feature 1", "Feature 2"] and so on.
+
+6. createdAt: For this you will select the option of "now"
+7. updatedAt: For this oyu will select the option of "now"
+8. developerOrCompanyName: You will enter the name of the developer or company. You can find this typically in the privacy policy on the tools website
+9. platforms: Here you will enter the platforms supported for this tool. The only values allowed are "Web-based", "Desktop", and "Mobile". And these values should be in an array like so: 
+
+["Web-based", "Desktop", "Mobile"]
+
+10. operatingSystems: Here you will enter the operating systems supported for this tool. The only values allowed are "Windows", "macOS", "Linux", "iOS", and "Android". And these values should be in an array like so: 
+
+["Windows", "macOS", "Linux", "iOS", "Android"]
+
+11. webImages: similar to the logo, you will have to upload screenshots of this tool to my supabase storage, get the url for each upload and enter here under the webImages column as an array of urls:
+
+["https://....image1.png", "https://....image2.png", "https://....image3.png"] and so on. 
+
+I need at least 3 to 5 webImages for each tool.
+
+12. App or Extension URL columns: 
+androidAppURL (if applicable)
+iosAppURL (if applicable)
+chromeExtensionURL (if applicable)
+firefoxAddonURL (if applicable)
+edgeExtensionURL (if applicable)
+safariExtensionURL (if applicable)
+linuxPackageURL (if applicable)
+windowsStoreURL (if applicable)
+macosAppStoreURL (if applicable)
+apkDownloadURL (if applicable)
+
+Some of these urls may not be applicable or don't exist. You will have to research the tool has each of these urls above.
+
+13. officialWebsiteURL: you will simply enter the url to the tools websites home page. For example: https://www.this-tool.com (this is an example of my website)
+
+14. apiDocumentationURL: if applicable, check on the tools website if they have documentation for developers. Some keywords to look for are API, or Developer.
+
+15. affiliateResourceURL: typically you can find this in the footer of the tools website displayed as "Partner" or "Affiliate" for the most part. You would need to click on whatever it says and save the link that you are redirected to under this column. I may also have you sign up for this affiliate partnership if I feel that I can trust you to do so.
+
+16. customAffiliateURL: This will be provided after you sign up for the tools affiliate partnership program. If allowed, all custom affiliate links should have aipg-io in the link name. The tools affiliate program may give you the option to create a custom affiliate link which would allow you to add aipg-io in the link name.
+
+17. videoURLs: Here I will need you to check on youtube if a channel exists for this tool. If it does, copy the link for the most recent video for up to 5 videos and enter it in the following format:
+
+["https://youtube.com/v=12345", "https://youtube.com/v=6789"] and so on
+
+18. creatorId: this will allow you to select the user that is creating this tool. You would of course, select yourself after we create an account for you.

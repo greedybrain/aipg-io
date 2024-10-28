@@ -59,7 +59,7 @@ const useOfferingFieldCrud = () => {
     };
 
     const addBulkOfferings = () => {
-        const bulkOffering = offering.split(",");
+        const bulkOffering = offering.split("|");
 
         if (bulkOffering.length > 0) {
             const existingOfferings = getExistingOfferings();

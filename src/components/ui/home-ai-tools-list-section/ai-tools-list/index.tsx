@@ -1,5 +1,6 @@
 "use client";
 
+import AiToolCard from "./ai-tool-card";
 import { cn } from "@/utils/tailwind/tw-merge";
 import useAiToolsStore from "@/stores/ai-tools";
 
@@ -8,8 +9,6 @@ const AiToolsList = () => {
         aiToolsRecord: state.aiToolsRecord,
     }));
 
-    console.log("aiToolsRecord: ", aiToolsRecord);
-
     return (
         <ul
             className={cn(
@@ -17,7 +16,7 @@ const AiToolsList = () => {
             )}
         >
             {Object.values(aiToolsRecord).map((tool) => (
-                <li key={tool.id}>{tool.name}</li>
+                <AiToolCard key={tool.id} {...tool} />
             ))}
         </ul>
     );

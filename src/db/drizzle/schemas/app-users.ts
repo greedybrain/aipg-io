@@ -6,6 +6,7 @@ import {
 } from "drizzle-orm";
 import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
+import { AITool } from "./ai-tools";
 import { pgEnum } from "drizzle-orm/pg-core";
 
 export const roleEnum = pgEnum("role", ["DEFAULT", "ADMIN", "OWNER"]);
@@ -30,7 +31,9 @@ export const AppUser = pgTable("appUsers", {
     userId: uuid("userId").unique().notNull(),
 });
 
-export const AppUserRelations = relations(AppUser, ({ many, one }) => ({}));
+export const AppUserRelations = relations(AppUser, ({ many }) => ({
+    aiToolsCreated: many(AITool),
+}));
 
 // Inferences
 export type TSelectAppUser = InferSelectModel<typeof AppUser>;

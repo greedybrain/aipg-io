@@ -66,11 +66,13 @@ export const AiToolSchema = z.object({
             .min(1, "Official website is required"),
         logo: z
             .instanceof(File)
-            .refine((file) => file.size <= 2 * 1024 * 1024, {
-                message: "Logo must not exceed 2MB",
+            .refine((file) => file.size <= 3 * 1024 * 1024, {
+                message: "Logo must not exceed 3MB",
+                path: ["logo"],
             })
             .refine((file) => ["image/png", "image/jpeg"].includes(file.type), {
                 message: "Only JPEG AND PNG formats are supported",
+                path: ["logo"],
             }),
         description: z
             .string()
@@ -121,8 +123,8 @@ export const AiToolSchema = z.object({
         webImages: z.array(
             z
                 .instanceof(File)
-                .refine((file) => file.size <= 3 * 1024 * 1024, {
-                    message: "Web image must not exceed 3MB",
+                .refine((file) => file.size <= 4 * 1024 * 1024, {
+                    message: "Web image must not exceed 4MB",
                 })
                 .refine(
                     (file) => ["image/png", "image/jpeg"].includes(file.type),

@@ -1,1 +1,0 @@
-ALTER TABLE "aiTools" DROP COLUMN IF EXISTS "pricingModel";

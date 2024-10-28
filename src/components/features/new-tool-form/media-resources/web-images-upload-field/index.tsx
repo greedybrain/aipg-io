@@ -11,6 +11,8 @@ const WebImagesUploadField = () => {
     const [webImagesPreview, setWebImagesPreview] = useState<string[]>([]);
     const methods = useAiToolFormContext();
     const webImages = methods.getValues(MEDIA_RESOURCES_WEB_IMAGES);
+    const webImagesError =
+        methods.formState.errors.mediaAndResources?.webImages?.[0];
 
     const handleFilesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = event.target.files;
@@ -69,6 +71,11 @@ const WebImagesUploadField = () => {
                 Upload images related to the tool for use on the website. This
                 could include screenshots or promotional images.
             </p>
+            {webImagesError && (
+                <p className={cn("text-red-500 mt-2 font-medium")}>
+                    {webImagesError.message}
+                </p>
+            )}
         </div>
     );
 };

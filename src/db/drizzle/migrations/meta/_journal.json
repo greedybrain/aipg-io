@@ -5,29 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1727992369987,
-      "tag": "0000_supreme_thunderbolts",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1728246651592,
-      "tag": "0001_sticky_venus",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1728308440625,
-      "tag": "0002_cynical_metal_master",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1728332369167,
-      "tag": "0003_clear_otto_octavius",
+      "when": 1728506248483,
+      "tag": "0000_blushing_molten_man",
       "breakpoints": true
     }
   ]

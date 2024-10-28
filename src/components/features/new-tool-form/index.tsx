@@ -5,6 +5,7 @@ import {
     defaultValues as defaultAiToolValues,
 } from "@/types/zod/ai-tools";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { useEffect, useTransition } from "react";
 
 import APKDownloadURLField from "./app-extension-urls/apk-download-url-field";
 import AffiliateResourceURLField from "./affiliate-api-information/affiliate-resource-url-field";
@@ -44,10 +45,10 @@ import WebImagesUploadField from "./media-resources/web-images-upload-field";
 import WindowsStoreURLField from "./app-extension-urls/window-store-url-field";
 import { cn } from "@/utils/tailwind/tw-merge";
 import { notify } from "@/utils/alerts/toast";
+import useAiToolFormDraft from "@/hooks/use-ai-tool-form-draft";
 import useAiToolsStore from "@/stores/ai-tools";
 import useIntegrationsStore from "@/stores/integrations";
 import useTagsStore from "@/stores/tags";
-import { useTransition } from "react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -56,9 +57,6 @@ const fieldsetStyles =
 
 const NewToolForm = () => {
     const [isPending, startTransition] = useTransition();
-    const { addNew } = useAiToolsStore((state) => ({
-        addNew: state.addNew,
-    }));
     const { selectedTags, resetSelectedTags } = useTagsStore((state) => ({
         selectedTags: state.selectedTags,
         resetSelectedTags: state.resetSelected,
@@ -68,10 +66,25 @@ const NewToolForm = () => {
             selectedIntegrations: state.selectedIntegrations,
             resetSelectedIntegrations: state.resetSelected,
         }));
+    const { addNew } = useAiToolsStore((state) => ({
+        addNew: state.addNew,
+    }));
     const methods = useForm<z.infer<typeof AiToolSchema>>({
         resolver: zodResolver(AiToolSchema),
         defaultValues: defaultAiToolValues,
     });
+
+    useAiToolFormDraft({
+        methods,
+        selectedIntegrations,
+        selectedTags,
+        resetSelectedIntegrations,
+        resetSelectedTags,
+    });
+
+    useEffect(() => {
+        console.log("Errors: ", methods.formState.errors);
+    }, [methods.formState.errors]);
 
     const isFreeToUse = methods.watch(PRICING_INFO_IS_FREE);
 

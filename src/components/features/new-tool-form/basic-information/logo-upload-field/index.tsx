@@ -11,6 +11,7 @@ import { useState } from "react";
 const LogoUploadField = () => {
     const [logoPreview, setLogoPreview] = useState<string>();
     const methods = useAiToolFormContext();
+    const logoError = methods.formState.errors.basicInfo?.logo;
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const fileList = event.target.files;
@@ -59,6 +60,11 @@ const LogoUploadField = () => {
                 Upload the logo image for the tool. Preferably a high-quality
                 image in PNG or JPEG format.
             </p>
+            {logoError && (
+                <p className={cn("text-red-500 mt-2 font-medium")}>
+                    {logoError.message}
+                </p>
+            )}
         </div>
     );
 };

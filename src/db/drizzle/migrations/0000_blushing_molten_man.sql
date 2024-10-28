@@ -51,16 +51,6 @@ CREATE TABLE IF NOT EXISTS "aiTools" (
 	"windowsStoreURL" text DEFAULT '',
 	"macosAppStoreURL" text DEFAULT '',
 	"apkDownloadURL" text DEFAULT '',
-	"pricingModel" jsonb DEFAULT '{
-            "isFreeToUse": false,
-            "hasFreeTierOrTrial": false,
-            "oneTimePurchasePrice": null,
-            "promotionDescription": null,
-            "tiers": [],
-            "priceInfoURL": null,
-            "minPrice": null,
-            "maxPrice": null
-        }'::jsonb NOT NULL,
 	"platforms" platformsenum[] DEFAULT ARRAY['Web-based']::platformsenum[] NOT NULL,
 	"operatingSystems" operatingsystemsenum[] DEFAULT ARRAY['Windows','macOS','Linux','iOS','Android']::operatingsystemsenum[] NOT NULL,
 	"features" text[] DEFAULT '{}'::text[] NOT NULL,
@@ -121,18 +111,13 @@ CREATE TABLE IF NOT EXISTS "aiToolPriceModels" (
 	"updatedAt" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "aiToolCreators" (
-	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"userId" uuid NOT NULL
-);
---> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "tiers" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
 	"name" text NOT NULL,
 	"description" text NOT NULL,
 	"offerings" text[] DEFAULT '{}'::text[],
-	"monthlyPrice" text NOT NULL,
-	"annualPrice" text NOT NULL,
+	"monthlyPrice" text,
+	"annualPrice" text,
 	"aiToolPriceModelId" uuid,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	"updatedAt" timestamp DEFAULT now() NOT NULL
@@ -163,19 +148,13 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "aiTools" ADD CONSTRAINT "aiTools_creatorId_aiToolCreators_id_fk" FOREIGN KEY ("creatorId") REFERENCES "public"."aiToolCreators"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "aiTools" ADD CONSTRAINT "aiTools_creatorId_appUsers_userId_fk" FOREIGN KEY ("creatorId") REFERENCES "public"."appUsers"("userId") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
  ALTER TABLE "aiToolPriceModels" ADD CONSTRAINT "aiToolPriceModels_aiToolId_aiTools_id_fk" FOREIGN KEY ("aiToolId") REFERENCES "public"."aiTools"("id") ON DELETE cascade ON UPDATE no action;
-EXCEPTION
- WHEN duplicate_object THEN null;
-END $$;
---> statement-breakpoint
-DO $$ BEGIN
- ALTER TABLE "aiToolCreators" ADD CONSTRAINT "aiToolCreators_userId_appUsers_id_fk" FOREIGN KEY ("userId") REFERENCES "public"."appUsers"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;

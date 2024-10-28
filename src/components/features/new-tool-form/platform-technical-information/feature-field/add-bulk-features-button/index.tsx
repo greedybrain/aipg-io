@@ -10,7 +10,7 @@ const AddBulkFeaturesButton = ({ feature, addBulkFeatures }: Props) => {
     if (!feature.includes("|")) return null;
 
     return (
-        <Button type="button" variant={"tertiary"}>
+        <Button type="button" variant={"tertiary"} onClick={addBulkFeatures}>
             Add bulk features
         </Button>
     );

@@ -19,7 +19,9 @@ interface InitialState {
     }>;
     addSelection: (newSelection: TSelectIntegration) => void;
     removeIntegration: (id: string) => void;
-    resetSelected: () => void;
+    resetSelected: (
+        selectedIntegrations?: Record<string, TSelectIntegration>,
+    ) => void;
 }
 
 const useIntegrationsStore = create<InitialState>((set) => ({
@@ -90,7 +92,8 @@ const useIntegrationsStore = create<InitialState>((set) => ({
                 "nameLower",
             ),
         })),
-    resetSelected: () => set(() => ({ selectedIntegrations: {} })),
+    resetSelected: (selectedIntegrations) =>
+        set(() => ({ selectedIntegrations: selectedIntegrations ?? {} })),
 }));
 
 const sortIntegrations = (integrations: TSelectIntegration[]) =>

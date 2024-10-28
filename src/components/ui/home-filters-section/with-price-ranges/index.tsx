@@ -1,4 +1,4 @@
-import { ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Group from "@/components/layout/group";
 import PriceRangesList from "../price-ranges-list";
 import { cn } from "@/utils/tailwind/tw-merge";
@@ -16,7 +16,7 @@ const WithPriceRanges = () => {
                     className={cn("flex items-center gap-x-1 cursor-pointer")}
                 >
                     <p className={cn("font-bold text-lg")}>Price range </p>
-                    <ChevronUp
+                    <ChevronDown
                         size={18}
                         className={cn("hover:scale-105 transition-all", {
                             "rotate-180": isPriceRangesCollapsed,

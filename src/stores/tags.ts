@@ -9,7 +9,7 @@ interface InitialState {
     loadAndSetTags: () => Promise<void>;
     addSelection: (tag: TSelectTag) => void;
     removeTag: (id: string) => void;
-    resetSelected: () => void;
+    resetSelected: (selectedTags?: Record<string, TSelectTag>) => void;
 }
 
 const useTagsStore = create<InitialState>((set) => ({
@@ -41,16 +41,11 @@ const useTagsStore = create<InitialState>((set) => ({
                 "nameLower",
             ),
         })),
-    resetSelected: () => set(() => ({ selectedTags: {} })),
+    resetSelected: (selectedTags) =>
+        set(() => ({ selectedTags: selectedTags ?? {} })),
 }));
 
 const sortTags = (tags: TSelectTag[]) =>
     tags.sort((a, b) => a.name.localeCompare(b.name));
-
-// const convertArrToRecord = (tags: TSelectTag[]) =>
-//     tags.reduce((acc: InitialState["tagsRecord"], tag) => {
-//         acc[tag.nameLower] = tag;
-//         return acc;
-//     }, {});
 
 export default useTagsStore;

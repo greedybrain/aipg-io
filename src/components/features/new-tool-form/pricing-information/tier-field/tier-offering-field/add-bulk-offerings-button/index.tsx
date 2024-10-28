@@ -7,7 +7,7 @@ interface Props {
 
 const AddBulkOfferingsButton = ({ offering, addBulkOfferings }: Props) => {
     if (!offering) return null;
-    if (!offering.includes(",")) return null;
+    if (!offering.includes("|")) return null;
 
     return (
         <Button type="button" variant={"tertiary"} onClick={addBulkOfferings}>

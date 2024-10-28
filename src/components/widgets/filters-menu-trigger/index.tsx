@@ -19,10 +19,6 @@ import WithTags from "@/components/ui/home-filters-section/with-tags";
 import { cn } from "@/utils/tailwind/tw-merge";
 
 const FiltersMenuTrigger = () => {
-    // const [isPriceRangesCollapsed, setIsPriceRangesCollapsed] =
-    //     useState<boolean>(false);
-    // const [isSortByCollapsed, setIsSortByCollapsed] = useState<boolean>(false);
-
     return (
         <Sheet>
             <SheetTrigger

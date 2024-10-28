@@ -6,8 +6,8 @@
         "strict": true,
         "noEmit": true,
         "esModuleInterop": true,
-        "module": "ESNext",
-        "moduleResolution": "Node",
+        "module": "NodeNext",
+        "moduleResolution": "NodeNext",
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
@@ -38,7 +38,8 @@
         ".next/types/**/*.ts",
         "jest.config.js",
         "vitest.config.js",
-        "vitest.config.mts"
+        "vitest.config.mts",
+        "src/db/seed/index.ts"
     ],
     "exclude": ["node_modules"]
 }

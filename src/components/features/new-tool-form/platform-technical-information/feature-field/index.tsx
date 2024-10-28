@@ -20,6 +20,7 @@ const FeatureField = () => {
         features,
         setEditMode,
         addFeature,
+        addBulkFeatures,
         editFeature,
         updateFeature,
         deleteFeature,
@@ -29,7 +30,7 @@ const FeatureField = () => {
         <Group>
             <NewToolFormField
                 name={PLATFORM_INFO_FEATURE}
-                placeholder="Enter key feature, or features separated by comma"
+                placeholder="Enter key feature, or features separated by pipe '|' symbol"
                 labelContent="Key Features"
                 formDescription="List the main features of the tool. Each feature should be concise and to the point. To bulk add features, separate each feature with a comma."
             />
@@ -52,7 +53,7 @@ const FeatureField = () => {
                     editMode={editMode}
                 />
                 <AddBulkFeaturesButton
-                    addBulkFeatures={() => null}
+                    addBulkFeatures={addBulkFeatures}
                     feature={feature}
                 />
                 <CancelEditButton

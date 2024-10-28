@@ -1,6 +1,7 @@
 "use server";
 
 import { AIToolTag, TInsertAIToolTag, TSelectTag } from "@/db/drizzle/schemas";
+import { and, eq } from "drizzle-orm";
 
 import { db } from "@/db";
 import { withTryCatch } from "@/utils/error-handling/withTryCatch";
@@ -11,8 +12,10 @@ export const server_createAIToolTag = async ({
 }: TInsertAIToolTag) => {
     const response = await withTryCatch(async () => {
         const foundAiToolTag = await db.query.AIToolTag.findFirst({
-            where: (fields, { and, eq }) =>
-                and(eq(fields.aiToolId, aiToolId), eq(fields.tagId, tagId)),
+            where: and(
+                eq(AIToolTag.aiToolId, aiToolId),
+                eq(AIToolTag.tagId, tagId),
+            ),
         });
 
         if (foundAiToolTag)

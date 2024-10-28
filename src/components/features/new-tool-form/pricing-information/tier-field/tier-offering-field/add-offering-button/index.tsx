@@ -7,7 +7,7 @@ interface Props {
 }
 
 const AddOfferingButton = ({ editMode, offering, addOffering }: Props) => {
-    if (!offering || offering.includes(",") || editMode) return null;
+    if (!offering || offering.includes("|") || editMode) return null;
 
     return (
         <Button type="button" variant={"tertiary"} onClick={addOffering}>

@@ -1,4 +1,4 @@
-import { ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import Group from "@/components/layout/group";
 import SortByList from "../sort-by-list";
 import { cn } from "@/utils/tailwind/tw-merge";
@@ -15,7 +15,7 @@ const WithSort = () => {
                     className={cn("flex items-center gap-x-1 cursor-pointer")}
                 >
                     <p className={cn("font-bold text-lg")}>Sort by </p>
-                    <ChevronUp
+                    <ChevronDown
                         size={18}
                         className={cn("hover:scale-105 transition-all", {
                             "rotate-180": isSortByCollapsed,

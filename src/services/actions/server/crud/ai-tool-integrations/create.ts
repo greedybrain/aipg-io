@@ -3,9 +3,10 @@
 import {
     AIToolIntegration,
     TInsertAIToolIntegration,
-    TSelectIntegration,
-} from "@/db/drizzle/schemas";
+} from "@/db/drizzle/schemas/ai-tool-integrations";
+import { and, eq } from "drizzle-orm";
 
+import { TSelectIntegration } from "@/db/drizzle/schemas/integrations";
 import { db } from "@/db";
 import { withTryCatch } from "@/utils/error-handling/withTryCatch";
 
@@ -16,11 +17,10 @@ export const server_createAIToolIntegrations = async ({
     const response = await withTryCatch(async () => {
         const foundAiToolIntegration =
             await db.query.AIToolIntegration.findFirst({
-                where: (fields, { and, eq }) =>
-                    and(
-                        eq(fields.aiToolId, aiToolId),
-                        eq(fields.integrationId, integrationId),
-                    ),
+                where: and(
+                    eq(AIToolIntegration.aiToolId, aiToolId),
+                    eq(AIToolIntegration.integrationId, integrationId),
+                ),
             });
 
         if (foundAiToolIntegration)

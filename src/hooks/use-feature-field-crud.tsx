@@ -1,3 +1,5 @@
+import { PLATFORM_INFO_FEATURE, PLATFORM_INFO_FEATURES } from "@/constants";
+
 import { notify } from "@/utils/alerts/toast";
 import { useAiToolFormContext } from "./use-ai-tool-form-context";
 import { useState } from "react";
@@ -6,8 +8,8 @@ const useFeatureFieldCrud = () => {
     const [idx, setIdx] = useState<number>(-1);
     const [editMode, setEditMode] = useState<boolean>(false);
     const methods = useAiToolFormContext();
-    const feature = methods.watch("platformAndTechnicalInfo.feature");
-    const features = methods.watch("platformAndTechnicalInfo.features");
+    const feature = methods.watch(PLATFORM_INFO_FEATURE);
+    const features = methods.watch(PLATFORM_INFO_FEATURES);
 
     const addFeature = () => {
         if (feature) {
@@ -20,7 +22,7 @@ const useFeatureFieldCrud = () => {
                 return;
             }
             const existingFeatures = getExistingFeatures();
-            methods.setValue("platformAndTechnicalInfo.features", [
+            methods.setValue(PLATFORM_INFO_FEATURES, [
                 ...existingFeatures,
                 feature,
             ]);
@@ -31,7 +33,7 @@ const useFeatureFieldCrud = () => {
     const editFeature = (idx: number, featureToEdit: string) => {
         setEditMode(true);
         setIdx(idx);
-        methods.setValue("platformAndTechnicalInfo.feature", featureToEdit);
+        methods.setValue(PLATFORM_INFO_FEATURE, featureToEdit);
     };
 
     const updateFeature = () => {
@@ -39,10 +41,7 @@ const useFeatureFieldCrud = () => {
 
         if (feature && idx > -1) {
             existingFeatures[idx] = feature;
-            methods.setValue(
-                "platformAndTechnicalInfo.features",
-                existingFeatures,
-            );
+            methods.setValue(PLATFORM_INFO_FEATURES, existingFeatures);
             resetFeature();
             setEditMode(false);
             setIdx(-1);
@@ -53,19 +52,32 @@ const useFeatureFieldCrud = () => {
         const existingFeatures = getExistingFeatures();
 
         methods.setValue(
-            "platformAndTechnicalInfo.features",
+            PLATFORM_INFO_FEATURES,
             existingFeatures.filter(
                 (existingFeature) => existingFeature !== feature,
             ),
         );
     };
 
+    const addBulkFeatures = () => {
+        const bulkFeatures = feature ? feature.split("|") : "";
+
+        if (bulkFeatures.length > 0) {
+            const existingFeatures = getExistingFeatures();
+            methods.setValue(PLATFORM_INFO_FEATURES, [
+                ...existingFeatures,
+                ...bulkFeatures,
+            ]);
+        }
+
+        resetFeature();
+    };
+
     // Helpers
-    const getExistingFeatures = () =>
-        methods.getValues("platformAndTechnicalInfo.features");
+    const getExistingFeatures = () => methods.getValues(PLATFORM_INFO_FEATURES);
 
     const resetFeature = () => {
-        methods.resetField("platformAndTechnicalInfo.feature");
+        methods.resetField(PLATFORM_INFO_FEATURE);
     };
 
     return {
@@ -75,6 +87,7 @@ const useFeatureFieldCrud = () => {
         features,
         setEditMode,
         addFeature,
+        addBulkFeatures,
         editFeature,
         updateFeature,
         deleteFeature,

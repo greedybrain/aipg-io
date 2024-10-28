@@ -1,5 +1,5 @@
 {
-  "id": "8402d73a-64ad-4a48-915d-d1cc5286df0d",
+  "id": "867a5ce4-9cfb-47fa-bac4-b3afca8ef475",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -269,13 +269,6 @@
           "notNull": false,
           "default": "''"
         },
-        "pricingModel": {
-          "name": "pricingModel",
-          "type": "jsonb",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "'{\n            \"isFreeToUse\": false,\n            \"hasFreeTierOrTrial\": false,\n            \"oneTimePurchasePrice\": null,\n            \"promotionDescription\": null,\n            \"tiers\": [],\n            \"priceInfoURL\": null,\n            \"minPrice\": null,\n            \"maxPrice\": null\n        }'::jsonb"
-        },
         "platforms": {
           "name": "platforms",
           "type": "platformsenum[]",
@@ -384,15 +377,15 @@
         }
       },
       "foreignKeys": {
-        "aiTools_creatorId_aiToolCreators_id_fk": {
-          "name": "aiTools_creatorId_aiToolCreators_id_fk",
+        "aiTools_creatorId_appUsers_userId_fk": {
+          "name": "aiTools_creatorId_appUsers_userId_fk",
           "tableFrom": "aiTools",
-          "tableTo": "aiToolCreators",
+          "tableTo": "appUsers",
           "columnsFrom": [
             "creatorId"
           ],
           "columnsTo": [
-            "id"
+            "userId"
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
@@ -685,43 +678,6 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.aiToolCreators": {
-      "name": "aiToolCreators",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "uuid",
-          "primaryKey": true,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "userId": {
-          "name": "userId",
-          "type": "uuid",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "aiToolCreators_userId_appUsers_id_fk": {
-          "name": "aiToolCreators_userId_appUsers_id_fk",
-          "tableFrom": "aiToolCreators",
-          "tableTo": "appUsers",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "public.tiers": {
       "name": "tiers",
       "schema": "",
@@ -756,13 +712,13 @@
           "name": "monthlyPrice",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "annualPrice": {
           "name": "annualPrice",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false
         },
         "aiToolPriceModelId": {
           "name": "aiToolPriceModelId",

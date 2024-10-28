@@ -19,8 +19,8 @@ import {
     uuid,
 } from "drizzle-orm/pg-core";
 
-import { AIToolCreator } from "./ai-tool-creators";
 import { AIToolPriceModel } from "./ai-tool-price-models";
+import { AppUser } from "./app-users";
 
 export const platformsEnum = pgEnum("platformsenum", [
     "Web-based",
@@ -95,7 +95,7 @@ const affiliateAndApiResources = {
 
 const admin = {
     createdAt: timestamp("createdAt").defaultNow(),
-    creatorId: uuid("creatorId").references(() => AIToolCreator.id, {
+    creatorId: uuid("creatorId").references(() => AppUser.userId, {
         onDelete: "cascade",
     }),
     updatedAt: timestamp("updatedAt").defaultNow(),
@@ -130,7 +130,10 @@ export const AIToolRelations = relations(AITool, ({ one, many }) => ({
     aiToolTags: many(AIToolTag),
     aiToolIntegrations: many(AIToolIntegration),
     aiToolPriceModel: one(AIToolPriceModel),
-    aiToolCreator: one(AIToolCreator),
+    creator: one(AppUser, {
+        fields: [AITool.creatorId],
+        references: [AppUser.userId],
+    }),
 }));
 
 // Inferences

@@ -19,12 +19,14 @@ const LogoutButton = ({ btnSize, className }: Props) => {
 
     const handleClick = () => {
         startTransition(async () => {
-            const { success, message } = await logout();
-
-            if (success) {
-                notify({ type: "success", message, id: "logout-success" });
+            await logout().then(() => {
+                notify({
+                    type: "success",
+                    message: "Logged out successfully",
+                    id: "logout-success",
+                });
                 push(LOGIN_ROUTE);
-            }
+            });
         });
     };
 

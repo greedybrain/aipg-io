@@ -11,12 +11,12 @@ const navItems = [
         route: HOME_ROUTE,
     },
     {
-        name: "Login",
-        route: LOGIN_ROUTE,
-    },
-    {
         name: "Privacy policy",
         route: PRIVACY_ROUTE,
+    },
+    {
+        name: "Login",
+        route: LOGIN_ROUTE,
     },
     {
         name: "Logout",

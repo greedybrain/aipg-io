@@ -18,7 +18,8 @@ const NavItemsMobile = ({ userId, DrawerClose }: Props) => {
         <nav className={cn("flex flex-col items-center pt-12")}>
             <ul className={cn("space-y-5")}>
                 {navItems.map((item) =>
-                    userId && item.name === "Login" ? null : (
+                    (userId && item.name === "Login") ||
+                    item.name === "Logout" ? null : (
                         <li key={item.name}>
                             <DrawerClose asChild>
                                 <NavItem item={item} />

@@ -1,12 +1,11 @@
 "use server";
 
-import { TAuthActionResponse } from "@/types";
 import { authErrorMessages } from "@/utils/data/error-codes-and-messages/auth-error-messages";
 import { createClient } from "@/utils/supabase/server";
-import { withTryCatch } from "@/utils/error-handling/withTryCatch";
+import { getErrorMessage } from "@/utils/status-messages/get-error-message";
 
-export const logout = async (): Promise<Omit<TAuthActionResponse, "data">> => {
-    const response = await withTryCatch(async () => {
+export const logout = async () => {
+    try {
         const supabase = createClient();
         const { error } = await supabase.auth.signOut();
 
@@ -17,7 +16,12 @@ export const logout = async (): Promise<Omit<TAuthActionResponse, "data">> => {
                 throw new Error(error.message);
             }
         }
-    }, "Logout successful");
 
-    return response;
+        console.log("Logged out successful");
+    } catch (error) {
+        return {
+            success: false,
+            message: getErrorMessage(error),
+        };
+    }
 };

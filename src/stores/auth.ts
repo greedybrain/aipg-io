@@ -107,11 +107,12 @@ const useAuthStore = create<InitialState>((set) => ({
         user && user.authUser && set(() => ({ authCTX: user }));
     },
     client_logoutUser: async () => {
-        const { success } = await logout();
-        success &&
-            set(() => ({
-                authCTX: { appUser: undefined, authUser: undefined },
-            }));
+        await logout().then(
+            () =>
+                void set(() => ({
+                    authCTX: { appUser: undefined, authUser: undefined },
+                })),
+        );
     },
     client_resetPassword: async (email) => {
         localStorage.setItem("emai;", email);

@@ -51,6 +51,20 @@ export async function updateSession(request: NextRequest) {
     );
     const isAdminRoute = request.nextUrl.pathname.startsWith("/admin");
 
+    if (!user) {
+        if (isAdminRoute) {
+            const url: NextURL = request.nextUrl.clone();
+            url.pathname = LOGIN_ROUTE;
+            return NextResponse.redirect(url);
+        }
+    }
+
+    if (!user && isProtectedRoute) {
+        const url: NextURL = request.nextUrl.clone();
+        url.pathname = LOGIN_ROUTE;
+        return NextResponse.redirect(url);
+    }
+
     if (user) {
         const { data: appUser } = await supabase
             .from("appUsers")
@@ -65,12 +79,6 @@ export async function updateSession(request: NextRequest) {
                 return NextResponse.redirect(url);
             }
         }
-    }
-
-    if (!user && isProtectedRoute) {
-        const url: NextURL = request.nextUrl.clone();
-        url.pathname = LOGIN_ROUTE;
-        return NextResponse.redirect(url);
     }
 
     if (user && isAuthRoute) {

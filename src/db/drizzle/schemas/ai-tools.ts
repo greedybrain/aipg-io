@@ -2,7 +2,9 @@ import {
     AIToolIntegration,
     TSelectAIToolIntegrationWithRelations,
 } from "./ai-tool-integrations";
+import { AIToolLogo, TSelectAIToolLogo } from "./ai-tool-logos";
 import { AIToolTag, TSelectAIToolTagWithRelations } from "./ai-tool-tags";
+import { AIToolWebImage, TSelectAIToolWebImage } from "./ai-tool-web-images";
 import {
     InferInsertModel,
     InferSelectModel,
@@ -42,14 +44,13 @@ const metadata = {
     name: text("name").notNull(),
     developerOrCompanyName: text("developerOrCompanyName").notNull(),
     officialWebsiteURL: text("officialWebsiteURL").notNull(),
-    logo: text("logo").notNull(),
+    logo: text("logo").default(""),
     description: text("description").notNull(),
 };
 
 const mediaResources = {
     webImages: text("webImages")
         .array()
-        .notNull()
         .default(sql`'{}'::text[]`),
     videoURLs: text("videoURLs")
         .array()
@@ -118,28 +119,31 @@ export const AITool = pgTable(
         ...admin,
     },
     (table) => ({
-        aiToolNameIndex: uniqueIndex("aiToolNameDeveloperOrCompanyIndex").on(
-            table.name,
-            table.developerOrCompanyName,
-        ),
+        nameDeveloperOrCompanyIndex: uniqueIndex(
+            "nameDeveloperOrCompanyIndex",
+        ).on(table.name, table.developerOrCompanyName),
     }),
 );
 
 // Relations
 export const AIToolRelations = relations(AITool, ({ one, many }) => ({
-    aiToolTags: many(AIToolTag),
-    aiToolIntegrations: many(AIToolIntegration),
-    aiToolPriceModel: one(AIToolPriceModel),
+    logo: one(AIToolLogo),
+    priceModel: one(AIToolPriceModel),
     creator: one(AppUser, {
         fields: [AITool.creatorId],
         references: [AppUser.userId],
     }),
+    webImages: many(AIToolWebImage),
+    tags: many(AIToolTag),
+    integrations: many(AIToolIntegration),
 }));
 
 // Inferences
 export type TSelectAIToolBase = InferSelectModel<typeof AITool>;
 export type TSelectAIToolWithRelations = InferSelectModel<typeof AITool> & {
-    aiToolTags?: TSelectAIToolTagWithRelations[];
-    aiToolIntegrations?: TSelectAIToolIntegrationWithRelations[];
+    logo: TSelectAIToolLogo;
+    webImages?: TSelectAIToolWebImage[];
+    tags?: TSelectAIToolTagWithRelations[];
+    integrations?: TSelectAIToolIntegrationWithRelations[];
 };
 export type TInsertAITool = InferInsertModel<typeof AITool>;

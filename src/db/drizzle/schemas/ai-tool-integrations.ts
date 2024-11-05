@@ -12,7 +12,7 @@ export const AIToolIntegration = pgTable("aiToolIntegrations", {
     id: uuid("id")
         .primaryKey()
         .default(sql`gen_random_uuid()`),
-    aiToolId: uuid("aiToolId")
+    toolId: uuid("toolId")
         .references(() => AITool.id, { onDelete: "cascade" })
         .notNull(),
     integrationId: uuid("integrationId")
@@ -26,8 +26,8 @@ export const AIToolIntegration = pgTable("aiToolIntegrations", {
 export const AIToolIntegrationRelations = relations(
     AIToolIntegration,
     ({ one }) => ({
-        aiTool: one(AITool, {
-            fields: [AIToolIntegration.aiToolId],
+        tool: one(AITool, {
+            fields: [AIToolIntegration.toolId],
             references: [AITool.id],
         }),
         integration: one(Integration, {
@@ -43,7 +43,7 @@ export type TSelectAIToolIntegrationBase = InferSelectModel<
 export type TSelectAIToolIntegrationWithRelations = InferSelectModel<
     typeof AIToolIntegration
 > & {
-    aiTool?: TSelectAIToolBase;
+    tool?: TSelectAIToolBase;
     integration?: TSelectIntegration;
 };
 export type TInsertAIToolIntegration = InferInsertModel<

@@ -32,7 +32,7 @@ export const AppUser = pgTable("appUsers", {
 });
 
 export const AppUserRelations = relations(AppUser, ({ many }) => ({
-    aiToolsCreated: many(AITool),
+    toolsCreated: many(AITool),
 }));
 
 // Inferences

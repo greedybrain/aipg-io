@@ -1,5 +1,5 @@
 {
-  "id": "867a5ce4-9cfb-47fa-bac4-b3afca8ef475",
+  "id": "8974e194-bc0a-4cec-93bf-4882443bd2ab",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -15,8 +15,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "aiToolId": {
-          "name": "aiToolId",
+        "toolId": {
+          "name": "toolId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -44,12 +44,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "aiToolIntegrations_aiToolId_aiTools_id_fk": {
-          "name": "aiToolIntegrations_aiToolId_aiTools_id_fk",
+        "aiToolIntegrations_toolId_aiTools_id_fk": {
+          "name": "aiToolIntegrations_toolId_aiTools_id_fk",
           "tableFrom": "aiToolIntegrations",
           "tableTo": "aiTools",
           "columnsFrom": [
-            "aiToolId"
+            "toolId"
           ],
           "columnsTo": [
             "id"
@@ -85,8 +85,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "aiToolId": {
-          "name": "aiToolId",
+        "toolId": {
+          "name": "toolId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -114,12 +114,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "aiToolTags_aiToolId_aiTools_id_fk": {
-          "name": "aiToolTags_aiToolId_aiTools_id_fk",
+        "aiToolTags_toolId_aiTools_id_fk": {
+          "name": "aiToolTags_toolId_aiTools_id_fk",
           "tableFrom": "aiToolTags",
           "tableTo": "aiTools",
           "columnsFrom": [
-            "aiToolId"
+            "toolId"
           ],
           "columnsTo": [
             "id"
@@ -177,7 +177,8 @@
           "name": "logo",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
+          "notNull": false,
+          "default": "''"
         },
         "description": {
           "name": "description",
@@ -189,7 +190,7 @@
           "name": "webImages",
           "type": "text[]",
           "primaryKey": false,
-          "notNull": true,
+          "notNull": false,
           "default": "'{}'::text[]"
         },
         "videoURLs": {
@@ -354,8 +355,8 @@
         }
       },
       "indexes": {
-        "aiToolNameDeveloperOrCompanyIndex": {
-          "name": "aiToolNameDeveloperOrCompanyIndex",
+        "nameDeveloperOrCompanyIndex": {
+          "name": "nameDeveloperOrCompanyIndex",
           "columns": [
             {
               "expression": "name",
@@ -589,8 +590,8 @@
           "notNull": true,
           "default": "gen_random_uuid()"
         },
-        "aiToolId": {
-          "name": "aiToolId",
+        "toolId": {
+          "name": "toolId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": true
@@ -661,12 +662,12 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "aiToolPriceModels_aiToolId_aiTools_id_fk": {
-          "name": "aiToolPriceModels_aiToolId_aiTools_id_fk",
+        "aiToolPriceModels_toolId_aiTools_id_fk": {
+          "name": "aiToolPriceModels_toolId_aiTools_id_fk",
           "tableFrom": "aiToolPriceModels",
           "tableTo": "aiTools",
           "columnsFrom": [
-            "aiToolId"
+            "toolId"
           ],
           "columnsTo": [
             "id"
@@ -720,8 +721,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "aiToolPriceModelId": {
-          "name": "aiToolPriceModelId",
+        "toolPriceModelId": {
+          "name": "toolPriceModelId",
           "type": "uuid",
           "primaryKey": false,
           "notNull": false
@@ -743,12 +744,126 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "tiers_aiToolPriceModelId_aiToolPriceModels_id_fk": {
-          "name": "tiers_aiToolPriceModelId_aiToolPriceModels_id_fk",
+        "tiers_toolPriceModelId_aiToolPriceModels_id_fk": {
+          "name": "tiers_toolPriceModelId_aiToolPriceModels_id_fk",
           "tableFrom": "tiers",
           "tableTo": "aiToolPriceModels",
           "columnsFrom": [
-            "aiToolPriceModelId"
+            "toolPriceModelId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.aiToolLogos": {
+      "name": "aiToolLogos",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "toolId": {
+          "name": "toolId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "imageURL": {
+          "name": "imageURL",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "aiToolLogos_toolId_aiTools_id_fk": {
+          "name": "aiToolLogos_toolId_aiTools_id_fk",
+          "tableFrom": "aiToolLogos",
+          "tableTo": "aiTools",
+          "columnsFrom": [
+            "toolId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.aiToolWebImages": {
+      "name": "aiToolWebImages",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true,
+          "default": "gen_random_uuid()"
+        },
+        "toolId": {
+          "name": "toolId",
+          "type": "uuid",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "imageURL": {
+          "name": "imageURL",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {
+        "aiToolWebImages_toolId_aiTools_id_fk": {
+          "name": "aiToolWebImages_toolId_aiTools_id_fk",
+          "tableFrom": "aiToolWebImages",
+          "tableTo": "aiTools",
+          "columnsFrom": [
+            "toolId"
           ],
           "columnsTo": [
             "id"

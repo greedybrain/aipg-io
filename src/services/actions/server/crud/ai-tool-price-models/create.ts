@@ -6,12 +6,12 @@ import {
     TInsertTier,
 } from "@/db/drizzle/schemas";
 
-import { createTiers } from "../tiers/create";
 import { db } from "@/db";
+import { server_createTiers } from "../tiers/create";
 import { withTryCatch } from "@/utils/error-handling/withTryCatch";
 
 export const server_createAIToolPriceModel = async ({
-    aiToolId,
+    toolId,
     tiers,
     ...restPriceModel
 }: TInsertAIToolPriceModel & { tiers?: TInsertTier[] }) => {
@@ -19,12 +19,14 @@ export const server_createAIToolPriceModel = async ({
         const [priceModel] = await db
             .insert(AIToolPriceModel)
             .values({
-                aiToolId,
+                toolId,
                 ...restPriceModel,
             })
             .returning();
 
-        tiers && !!tiers.length && (await createTiers(priceModel.id, tiers));
+        tiers &&
+            !!tiers.length &&
+            (await server_createTiers(priceModel.id, tiers));
 
         return priceModel;
     }, "Price model created for tool successfully");

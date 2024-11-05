@@ -35,7 +35,7 @@ const tierSchema = z
         }
     });
 
-const urlSchema = z.string().url("Invalid URL format").nullable();
+const urlSchema = z.string().url("Invalid URL format").optional();
 
 const platformsEnum = z.enum(["Web-based", "Desktop", "Mobile"]);
 const operatingSystemsEnum = z.enum([
@@ -73,7 +73,8 @@ export const AiToolSchema = z.object({
             .refine((file) => ["image/png", "image/jpeg"].includes(file.type), {
                 message: "Only JPEG AND PNG formats are supported",
                 path: ["logo"],
-            }),
+            })
+            .optional(),
         description: z
             .string()
             .min(
@@ -120,17 +121,20 @@ export const AiToolSchema = z.object({
 
     // ================ Media & Resources ==================
     mediaAndResources: z.object({
-        webImages: z.array(
-            z
-                .instanceof(File)
-                .refine((file) => file.size <= 4 * 1024 * 1024, {
-                    message: "Web image must not exceed 4MB",
-                })
-                .refine(
-                    (file) => ["image/png", "image/jpeg"].includes(file.type),
-                    { message: "Only JPEG AND PNG formats are supported" },
-                ),
-        ),
+        webImages: z
+            .array(
+                z
+                    .instanceof(File)
+                    .refine((file) => file.size <= 4 * 1024 * 1024, {
+                        message: "Web image must not exceed 4MB",
+                    })
+                    .refine(
+                        (file) =>
+                            ["image/png", "image/jpeg"].includes(file.type),
+                        { message: "Only JPEG AND PNG formats are supported" },
+                    ),
+            )
+            .optional(),
         videoURL: z.string().nullable().default(null),
         videoURLs: z.array(z.string()).default([]),
     }),
@@ -204,22 +208,22 @@ export const defaultValues: z.infer<typeof AiToolSchema> = {
 
     // ================ App & Extension URLs ==================
     appAndExtURLs: {
-        iosAppURL: null, // Default null
-        androidAppURL: null, // Default null
-        chromeExtensionURL: null, // Default null
-        firefoxAddonURL: null, // Default null
-        edgeExtensionURL: null, // Default null
-        safariExtensionURL: null, // Default null
-        linuxPackageURL: null, // Default null
-        windowsStoreURL: null, // Default null
-        macosAppStoreURL: null, // Default null
-        apkDownloadURL: null, // Default null
+        iosAppURL: undefined, // Default undefined
+        androidAppURL: undefined, // Default undefined
+        chromeExtensionURL: undefined, // Default undefined
+        firefoxAddonURL: undefined, // Default undefined
+        edgeExtensionURL: undefined, // Default undefined
+        safariExtensionURL: undefined, // Default undefined
+        linuxPackageURL: undefined, // Default undefined
+        windowsStoreURL: undefined, // Default undefined
+        macosAppStoreURL: undefined, // Default undefined
+        apkDownloadURL: undefined, // Default undefined
     },
 
     // ================ Affiliate and API Information ==================
     affiliateAndApiInfo: {
-        apiDocumentationURL: null, // Default null
-        affiliateResourceURL: null, // Default null
-        customAffiliateURL: null, // Default null
+        apiDocumentationURL: undefined, // Default undefined
+        affiliateResourceURL: undefined, // Default undefined
+        customAffiliateURL: undefined, // Default undefined
     },
 };

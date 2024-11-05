@@ -11,14 +11,14 @@ import { db } from "@/db";
 import { withTryCatch } from "@/utils/error-handling/withTryCatch";
 
 export const server_createAIToolIntegrations = async ({
-    aiToolId,
+    toolId,
     integrationId,
 }: TInsertAIToolIntegration) => {
     const response = await withTryCatch(async () => {
         const foundAiToolIntegration =
             await db.query.AIToolIntegration.findFirst({
                 where: and(
-                    eq(AIToolIntegration.aiToolId, aiToolId),
+                    eq(AIToolIntegration.toolId, toolId),
                     eq(AIToolIntegration.integrationId, integrationId),
                 ),
             });
@@ -29,7 +29,7 @@ export const server_createAIToolIntegrations = async ({
         return db
             .insert(AIToolIntegration)
             .values({
-                aiToolId,
+                toolId,
                 integrationId,
             })
             .returning();
@@ -40,10 +40,10 @@ export const server_createAIToolIntegrations = async ({
     return response;
 };
 
-export const createAiToolIntegrations = async (
-    aiToolId: string,
+export const server_createAiToolIntegrations = async (
+    toolId: string,
     integrations: TSelectIntegration[],
 ) => {
     for (const { id: integrationId } of integrations)
-        await server_createAIToolIntegrations({ aiToolId, integrationId });
+        await server_createAIToolIntegrations({ toolId, integrationId });
 };

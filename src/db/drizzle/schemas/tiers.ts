@@ -19,7 +19,7 @@ export const Tier = pgTable("tiers", {
         .default(sql`'{}'::text[]`),
     monthlyPrice: text("monthlyPrice"),
     annualPrice: text("annualPrice"),
-    aiToolPriceModelId: uuid("aiToolPriceModelId").references(
+    toolPriceModelId: uuid("toolPriceModelId").references(
         () => AIToolPriceModel.id,
         { onDelete: "cascade" },
     ),
@@ -29,8 +29,8 @@ export const Tier = pgTable("tiers", {
 
 // Relations
 export const TierRelations = relations(Tier, ({ one }) => ({
-    aiToolPriceModel: one(AIToolPriceModel, {
-        fields: [Tier.aiToolPriceModelId],
+    toolPriceModel: one(AIToolPriceModel, {
+        fields: [Tier.toolPriceModelId],
         references: [AIToolPriceModel.id],
     }),
 }));

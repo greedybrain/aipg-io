@@ -10,6 +10,8 @@ export default defineConfig({
         "./src/db/drizzle/schemas/tags.ts",
         "./src/db/drizzle/schemas/ai-tool-price-models.ts",
         "./src/db/drizzle/schemas/tiers.ts",
+        "./src/db/drizzle/schemas/ai-tool-logos.ts",
+        "./src/db/drizzle/schemas/ai-tool-web-images.ts",
     ],
     out: "./src/db/drizzle/migrations",
     dialect: "postgresql",

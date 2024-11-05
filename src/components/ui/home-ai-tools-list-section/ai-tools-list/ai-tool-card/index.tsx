@@ -2,18 +2,18 @@ import { BookmarkPlusIcon } from "lucide-react";
 import Group from "@/components/layout/group";
 import Image from "next/image";
 import { Skeleton } from "@/components/ui/skeleton";
-import { TSelectAIToolBase } from "@/db/drizzle/schemas";
+import { TSelectAIToolWithRelations } from "@/db/drizzle/schemas";
 import { cn } from "@/utils/tailwind/tw-merge";
 
-const AiToolCard = (tool: TSelectAIToolBase) => {
+const AiToolCard = (tool: TSelectAIToolWithRelations) => {
     return (
         <div className="flex flex-col space-y-3 max-w-[400px] w-full">
             <Group
                 className={cn(
-                    "flex flex-col p-3 h-[525px] w-full bg-white border-4 border-app-tertiary rounded-2xl shadow-neobrut3",
+                    "flex flex-col p-3 w-full bg-white border-4 border-app-tertiary rounded-2xl shadow-neobrut3",
                 )}
             >
-                <a
+                {/* <a
                     href={tool.officialWebsiteURL}
                     target="_blank"
                     rel="noreferrer noopener"
@@ -27,19 +27,21 @@ const AiToolCard = (tool: TSelectAIToolBase) => {
                             "rounded-lg  border-2 border-app-tertiary drop-shadow-lg",
                         )}
                     />
-                </a>
+                </a> */}
                 <Group className={cn("mt-4 flex items-center justify-between")}>
                     <Group className={cn("flex items-center gap-x-3")}>
-                        <div className={cn("w-[40px] h-[40px] relative")}>
+                        <div className={cn("w-[50px] h-[50px] relative")}>
                             <Image
-                                src={tool.logo}
+                                src={tool.logo.imageURL}
                                 alt={`${tool.name} logo`}
                                 fill
-                                className={cn("rounded-full drop-shadow-lg")}
+                                className={cn(
+                                    "rounded-full drop-shadow-lg object-contain",
+                                )}
                             />
                         </div>
                         <Group className={cn("-space-y-1")}>
-                            <p className={cn("")}>{tool.name}</p>
+                            <p className={cn("font-bold")}>{tool.name}</p>
                             <p className={cn("text-sm text-app-tertiary/65")}>
                                 {`by ${tool.developerOrCompanyName}`}
                             </p>
@@ -62,7 +64,9 @@ const AiToolCard = (tool: TSelectAIToolBase) => {
                     className={cn("flex-1 mt-5 flex flex-col justify-between")}
                 >
                     <p className={cn("line-clamp-4")}>{tool.description}</p>
-                    <Group className={cn("flex justify-between items-center")}>
+                    <Group
+                        className={cn("flex justify-between items-center mt-5")}
+                    >
                         <Group className={cn("space-y-2")}>
                             <Skeleton
                                 className={cn(

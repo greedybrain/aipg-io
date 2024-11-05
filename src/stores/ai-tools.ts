@@ -1,6 +1,7 @@
 import {
     TInsertAITool,
-    TSelectAIToolBase,
+    TSelectAIToolLogo,
+    TSelectAIToolWithRelations,
     TSelectIntegration,
     TSelectTag,
 } from "@/db/drizzle/schemas";
@@ -13,7 +14,7 @@ import { server_createAITools } from "@/services/actions/server/crud/ai-tools/cr
 import { server_readAiTools } from "@/services/actions/server/crud/ai-tools/read";
 
 interface InitialState {
-    aiToolsRecord: Record<string, TSelectAIToolBase>;
+    aiToolsRecord: Record<string, TSelectAIToolWithRelations>;
     aiToolsIsLoading: boolean;
     loadAndSetAiTools: () => Promise<void>;
     addNew: (
@@ -39,7 +40,12 @@ const useAiToolsStore = create<InitialState>((set) => ({
         if (!aiTools) return;
 
         set(() => ({
-            aiToolsRecord: convertArrToRecord(aiTools, "name"),
+            aiToolsRecord: convertArrToRecord(
+                aiTools as (TSelectAIToolWithRelations & {
+                    logo: TSelectAIToolLogo;
+                })[],
+                "name",
+            ),
             aiToolsIsLoading: false,
         }));
     },
@@ -56,16 +62,23 @@ const useAiToolsStore = create<InitialState>((set) => ({
             message,
             success,
         } = await server_createAITools({
-            ...restData,
+            logoImageURL: logo,
+            // Todo: Make this so that it isn't needed anymore (logo)
             logo,
             webImages,
+            ...restData,
         });
 
         if (aiTool && success) {
             set((state) => ({
                 ...state,
                 aiToolsRecord: convertArrToRecord(
-                    [...Object.values(state.aiToolsRecord), aiTool],
+                    [
+                        ...Object.values(state.aiToolsRecord),
+                        aiTool as TSelectAIToolWithRelations & {
+                            logo: TSelectAIToolLogo;
+                        },
+                    ],
                     "name",
                 ),
             }));

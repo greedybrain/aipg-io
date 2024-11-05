@@ -12,7 +12,7 @@ export const AIToolTag = pgTable("aiToolTags", {
     id: uuid("id")
         .primaryKey()
         .default(sql`gen_random_uuid()`),
-    aiToolId: uuid("aiToolId")
+    toolId: uuid("toolId")
         .references(() => AITool.id, { onDelete: "cascade" })
         .notNull(),
     tagId: uuid("tagId")
@@ -24,8 +24,8 @@ export const AIToolTag = pgTable("aiToolTags", {
 
 // Relations
 export const AIToolTagRelations = relations(AIToolTag, ({ one }) => ({
-    aiTool: one(AITool, {
-        fields: [AIToolTag.aiToolId],
+    tool: one(AITool, {
+        fields: [AIToolTag.toolId],
         references: [AITool.id],
     }),
     tag: one(Tag, {
@@ -38,7 +38,7 @@ export type TSelectAIToolTagBase = InferSelectModel<typeof AIToolTag>;
 export type TSelectAIToolTagWithRelations = InferSelectModel<
     typeof AIToolTag
 > & {
-    aiTool?: TSelectAIToolBase;
+    tool?: TSelectAIToolBase;
     tagBase?: TSelectTag;
     tagPartial: Pick<TSelectTag, "id" | "name" | "category">;
 };

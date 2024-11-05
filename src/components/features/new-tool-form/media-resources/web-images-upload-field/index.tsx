@@ -29,7 +29,7 @@ const WebImagesUploadField = () => {
     return (
         <div>
             <label htmlFor="webImages" className={cn("w-fit")}>
-                {!webImages.length ? (
+                {!webImages?.length ? (
                     <div
                         className={cn(
                             "border-2 shadow-neobrut2 border-app-tertiary flex items-center gap-x-3 active:shadow-neobrut1 w-fit rounded-lg px-4 py-3 bg-app-primary font-medium",
@@ -40,7 +40,7 @@ const WebImagesUploadField = () => {
                     </div>
                 ) : (
                     <ul className={cn("grid grid-cols-2 gap-3")}>
-                        {webImages.map((image, idx) => (
+                        {webImages?.map((image, idx) => (
                             <li
                                 key={`${idx}_${image.name}`}
                                 className={cn("relative w-full h-[150px]")}

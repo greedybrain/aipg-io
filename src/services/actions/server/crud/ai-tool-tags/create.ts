@@ -7,13 +7,13 @@ import { db } from "@/db";
 import { withTryCatch } from "@/utils/error-handling/withTryCatch";
 
 export const server_createAIToolTag = async ({
-    aiToolId,
+    toolId,
     tagId,
 }: TInsertAIToolTag) => {
     const response = await withTryCatch(async () => {
         const foundAiToolTag = await db.query.AIToolTag.findFirst({
             where: and(
-                eq(AIToolTag.aiToolId, aiToolId),
+                eq(AIToolTag.toolId, toolId),
                 eq(AIToolTag.tagId, tagId),
             ),
         });
@@ -24,7 +24,7 @@ export const server_createAIToolTag = async ({
         return db
             .insert(AIToolTag)
             .values({
-                aiToolId,
+                toolId,
                 tagId,
             })
             .returning();
@@ -35,10 +35,10 @@ export const server_createAIToolTag = async ({
     return response;
 };
 
-export const createAiToolTags = async (
-    aiToolId: string,
+export const server_createAiToolTags = async (
+    toolId: string,
     tags: TSelectTag[],
 ) => {
     for (const { id: tagId } of tags)
-        await server_createAIToolTag({ aiToolId, tagId });
+        await server_createAIToolTag({ toolId, tagId });
 };

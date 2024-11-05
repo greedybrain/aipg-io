@@ -13,7 +13,7 @@ export const AIToolPriceModel = pgTable("aiToolPriceModels", {
     id: uuid("id")
         .primaryKey()
         .default(sql`gen_random_uuid()`),
-    aiToolId: uuid("aiToolId")
+    toolId: uuid("toolId")
         .references(() => AITool.id, { onDelete: "cascade" })
         .notNull(),
     isFreeToUse: boolean("isFreeToUse").default(false),
@@ -31,8 +31,8 @@ export const AIToolPriceModel = pgTable("aiToolPriceModels", {
 export const AIToolPriceModelRelations = relations(
     AIToolPriceModel,
     ({ one, many }) => ({
-        aiTool: one(AITool, {
-            fields: [AIToolPriceModel.aiToolId],
+        tool: one(AITool, {
+            fields: [AIToolPriceModel.toolId],
             references: [AITool.id],
         }),
         tiers: many(Tier),

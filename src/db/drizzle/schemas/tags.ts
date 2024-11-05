@@ -22,7 +22,7 @@ export const Tag = pgTable("tags", {
 
 // Relations
 export const TagRelations = relations(Tag, ({ many }) => ({
-    aiToolTags: many(AIToolTag),
+    toolTags: many(AIToolTag),
 }));
 
 export type TSelectTag = InferSelectModel<typeof Tag>;

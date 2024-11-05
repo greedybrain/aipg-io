@@ -6,14 +6,14 @@ import { db } from "@/db";
 import { withTryCatch } from "@/utils/error-handling/withTryCatch";
 
 export const server_createTier = async ({
-    aiToolPriceModelId,
+    toolPriceModelId,
     ...tier
 }: TInsertTier) => {
     const response = await withTryCatch(async () => {
         return db
             .insert(Tier)
             .values({
-                aiToolPriceModelId,
+                toolPriceModelId,
                 annualPrice: tier.annualPrice,
                 description: tier.description,
                 monthlyPrice: tier.monthlyPrice,
@@ -28,10 +28,10 @@ export const server_createTier = async ({
     return response;
 };
 
-export const createTiers = async (
-    aiToolPriceModelId: string,
+export const server_createTiers = async (
+    toolPriceModelId: string,
     tiers: TInsertTier[],
 ) => {
     for (const tier of tiers)
-        await server_createTier({ aiToolPriceModelId, ...tier });
+        await server_createTier({ toolPriceModelId, ...tier });
 };

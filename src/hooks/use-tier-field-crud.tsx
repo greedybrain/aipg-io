@@ -16,7 +16,8 @@ const useTierFieldCrud = () => {
         const foundTier = tiers.find(
             (thisTier) =>
                 thisTier.name === tier.name ||
-                thisTier.description === tier.description,
+                (!!tier.description &&
+                    thisTier.description === tier.description),
         );
 
         if (foundTier) {

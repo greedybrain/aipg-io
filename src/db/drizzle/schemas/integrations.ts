@@ -23,12 +23,12 @@ export const Integration = pgTable("integrations", {
 
 // Relations
 export const IntegrationRelations = relations(Integration, ({ many }) => ({
-    aiToolIntegrations: many(AIToolIntegration),
+    toolIntegrations: many(AIToolIntegration),
 }));
 export type TSelectIntegration = InferSelectModel<typeof Integration>;
 export type TSelectIntegrationWithRelations = InferSelectModel<
     typeof Integration
 > & {
-    aiToolIntegrations?: TSelectAIToolIntegrationWithRelations[];
+    toolIntegrations?: TSelectAIToolIntegrationWithRelations[];
 };
 export type TInsertIntegration = InferInsertModel<typeof Integration>;

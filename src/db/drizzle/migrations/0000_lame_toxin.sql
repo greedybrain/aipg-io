@@ -18,7 +18,7 @@ END $$;
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "aiToolIntegrations" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"aiToolId" uuid NOT NULL,
+	"toolId" uuid NOT NULL,
 	"integrationId" uuid NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	"updatedAt" timestamp DEFAULT now() NOT NULL
@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS "aiToolIntegrations" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "aiToolTags" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"aiToolId" uuid NOT NULL,
+	"toolId" uuid NOT NULL,
 	"tagId" uuid NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	"updatedAt" timestamp DEFAULT now() NOT NULL
@@ -37,9 +37,9 @@ CREATE TABLE IF NOT EXISTS "aiTools" (
 	"name" text NOT NULL,
 	"developerOrCompanyName" text NOT NULL,
 	"officialWebsiteURL" text NOT NULL,
-	"logo" text NOT NULL,
+	"logo" text DEFAULT '',
 	"description" text NOT NULL,
-	"webImages" text[] DEFAULT '{}'::text[] NOT NULL,
+	"webImages" text[] DEFAULT '{}'::text[],
 	"videoURLs" text[] DEFAULT '{}'::text[] NOT NULL,
 	"iosAppURL" text DEFAULT '',
 	"androidAppURL" text DEFAULT '',
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS "tags" (
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "aiToolPriceModels" (
 	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
-	"aiToolId" uuid NOT NULL,
+	"toolId" uuid NOT NULL,
 	"isFreeToUse" boolean DEFAULT false,
 	"hasFreeTierOrTrial" boolean DEFAULT false,
 	"oneTimePurchasePrice" text DEFAULT '',
@@ -118,13 +118,29 @@ CREATE TABLE IF NOT EXISTS "tiers" (
 	"offerings" text[] DEFAULT '{}'::text[],
 	"monthlyPrice" text,
 	"annualPrice" text,
-	"aiToolPriceModelId" uuid,
+	"toolPriceModelId" uuid,
+	"createdAt" timestamp DEFAULT now() NOT NULL,
+	"updatedAt" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "aiToolLogos" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"toolId" uuid NOT NULL,
+	"imageURL" text NOT NULL,
+	"createdAt" timestamp DEFAULT now() NOT NULL,
+	"updatedAt" timestamp DEFAULT now() NOT NULL
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "aiToolWebImages" (
+	"id" uuid PRIMARY KEY DEFAULT gen_random_uuid() NOT NULL,
+	"toolId" uuid NOT NULL,
+	"imageURL" text NOT NULL,
 	"createdAt" timestamp DEFAULT now() NOT NULL,
 	"updatedAt" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "aiToolIntegrations" ADD CONSTRAINT "aiToolIntegrations_aiToolId_aiTools_id_fk" FOREIGN KEY ("aiToolId") REFERENCES "public"."aiTools"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "aiToolIntegrations" ADD CONSTRAINT "aiToolIntegrations_toolId_aiTools_id_fk" FOREIGN KEY ("toolId") REFERENCES "public"."aiTools"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -136,7 +152,7 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "aiToolTags" ADD CONSTRAINT "aiToolTags_aiToolId_aiTools_id_fk" FOREIGN KEY ("aiToolId") REFERENCES "public"."aiTools"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "aiToolTags" ADD CONSTRAINT "aiToolTags_toolId_aiTools_id_fk" FOREIGN KEY ("toolId") REFERENCES "public"."aiTools"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -154,15 +170,27 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "aiToolPriceModels" ADD CONSTRAINT "aiToolPriceModels_aiToolId_aiTools_id_fk" FOREIGN KEY ("aiToolId") REFERENCES "public"."aiTools"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "aiToolPriceModels" ADD CONSTRAINT "aiToolPriceModels_toolId_aiTools_id_fk" FOREIGN KEY ("toolId") REFERENCES "public"."aiTools"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "tiers" ADD CONSTRAINT "tiers_aiToolPriceModelId_aiToolPriceModels_id_fk" FOREIGN KEY ("aiToolPriceModelId") REFERENCES "public"."aiToolPriceModels"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "tiers" ADD CONSTRAINT "tiers_toolPriceModelId_aiToolPriceModels_id_fk" FOREIGN KEY ("toolPriceModelId") REFERENCES "public"."aiToolPriceModels"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
-CREATE UNIQUE INDEX IF NOT EXISTS "aiToolNameDeveloperOrCompanyIndex" ON "aiTools" USING btree ("name","developerOrCompanyName");
+DO $$ BEGIN
+ ALTER TABLE "aiToolLogos" ADD CONSTRAINT "aiToolLogos_toolId_aiTools_id_fk" FOREIGN KEY ("toolId") REFERENCES "public"."aiTools"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "aiToolWebImages" ADD CONSTRAINT "aiToolWebImages_toolId_aiTools_id_fk" FOREIGN KEY ("toolId") REFERENCES "public"."aiTools"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+CREATE UNIQUE INDEX IF NOT EXISTS "nameDeveloperOrCompanyIndex" ON "aiTools" USING btree ("name","developerOrCompanyName");

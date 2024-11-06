@@ -8,7 +8,7 @@ const AiToolsLoading = () => {
                 "mt-14 grid grid-cols-1 justify-items-center sm:grid-cols-2 gap-4 max-w-[790px] mx-auto lg:max-w-[1100px] lg:grid-cols-3",
             )}
         >
-            {Array.from({ length: 9 }).map((_) => (
+            {Array.from({ length: 3 }).map((_) => (
                 <AiToolCardLoading key={crypto.randomUUID()} />
             ))}
         </ul>

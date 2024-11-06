@@ -3,6 +3,10 @@ import {
     TSelectAIToolIntegrationWithRelations,
 } from "./ai-tool-integrations";
 import { AIToolLogo, TSelectAIToolLogo } from "./ai-tool-logos";
+import {
+    AIToolPriceModel,
+    TSelectAIToolPriceModel,
+} from "./ai-tool-price-models";
 import { AIToolTag, TSelectAIToolTagWithRelations } from "./ai-tool-tags";
 import { AIToolWebImage, TSelectAIToolWebImage } from "./ai-tool-web-images";
 import {
@@ -21,7 +25,6 @@ import {
     uuid,
 } from "drizzle-orm/pg-core";
 
-import { AIToolPriceModel } from "./ai-tool-price-models";
 import { AppUser } from "./app-users";
 
 export const platformsEnum = pgEnum("platformsenum", [
@@ -127,7 +130,7 @@ export const AITool = pgTable(
 
 // Relations
 export const AIToolRelations = relations(AITool, ({ one, many }) => ({
-    logo: one(AIToolLogo),
+    toolLogo: one(AIToolLogo),
     priceModel: one(AIToolPriceModel),
     creator: one(AppUser, {
         fields: [AITool.creatorId],
@@ -141,9 +144,10 @@ export const AIToolRelations = relations(AITool, ({ one, many }) => ({
 // Inferences
 export type TSelectAIToolBase = InferSelectModel<typeof AITool>;
 export type TSelectAIToolWithRelations = InferSelectModel<typeof AITool> & {
-    logo: TSelectAIToolLogo;
+    toolLogo: TSelectAIToolLogo;
     webImages?: TSelectAIToolWebImage[];
     tags?: TSelectAIToolTagWithRelations[];
     integrations?: TSelectAIToolIntegrationWithRelations[];
+    priceModel?: TSelectAIToolPriceModel;
 };
 export type TInsertAITool = InferInsertModel<typeof AITool>;

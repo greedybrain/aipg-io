@@ -39,7 +39,7 @@ export type TSelectAIToolTagWithRelations = InferSelectModel<
     typeof AIToolTag
 > & {
     tool?: TSelectAIToolBase;
-    tagBase?: TSelectTag;
+    tag?: TSelectTag;
     tagPartial: Pick<TSelectTag, "id" | "name" | "category">;
 };
 export type TInsertAIToolTag = InferInsertModel<typeof AIToolTag>;

@@ -4,10 +4,10 @@ import {
     relations,
     sql,
 } from "drizzle-orm";
+import { TSelectTier, Tier } from "./tiers";
 import { boolean, pgTable, text, timestamp, uuid } from "drizzle-orm/pg-core";
 
 import { AITool } from "./ai-tools";
-import { Tier } from "./tiers";
 
 export const AIToolPriceModel = pgTable("aiToolPriceModels", {
     id: uuid("id")
@@ -39,5 +39,9 @@ export const AIToolPriceModelRelations = relations(
     }),
 );
 
-export type TSelectAIToolPriceModel = InferSelectModel<typeof AIToolPriceModel>;
+export type TSelectAIToolPriceModel = InferSelectModel<
+    typeof AIToolPriceModel
+> & {
+    tiers?: TSelectTier[];
+};
 export type TInsertAIToolPriceModel = InferInsertModel<typeof AIToolPriceModel>;

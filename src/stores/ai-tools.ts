@@ -36,13 +36,18 @@ const useAiToolsStore = create<InitialState>((set) => ({
     aiToolsIsLoading: true,
     loadAndSetAiTools: async () => {
         set(() => ({ aiToolsIsLoading: true }));
-        const { data: aiTools } = await server_readAiTools();
+        const { data: aiTools } = await server_readAiTools({
+            withLogo: true,
+            withPriceModel: { included: true, withTiers: undefined },
+            withTags: { included: true, withTag: true },
+            withWebImages: undefined,
+        });
         if (!aiTools) return;
 
         set(() => ({
             aiToolsRecord: convertArrToRecord(
                 aiTools as (TSelectAIToolWithRelations & {
-                    logo: TSelectAIToolLogo;
+                    toolLogo: TSelectAIToolLogo;
                 })[],
                 "name",
             ),

@@ -35,7 +35,7 @@ const tierSchema = z
         }
     });
 
-const urlSchema = z.string().url("Invalid URL format").optional();
+const urlSchema = z.string().url("Invalid URL format").nullable().optional();
 
 const platformsEnum = z.enum(["Web-based", "Desktop", "Mobile"]);
 const operatingSystemsEnum = z.enum([
@@ -208,22 +208,22 @@ export const defaultValues: z.infer<typeof AiToolSchema> = {
 
     // ================ App & Extension URLs ==================
     appAndExtURLs: {
-        iosAppURL: undefined, // Default undefined
-        androidAppURL: undefined, // Default undefined
-        chromeExtensionURL: undefined, // Default undefined
-        firefoxAddonURL: undefined, // Default undefined
-        edgeExtensionURL: undefined, // Default undefined
-        safariExtensionURL: undefined, // Default undefined
-        linuxPackageURL: undefined, // Default undefined
-        windowsStoreURL: undefined, // Default undefined
-        macosAppStoreURL: undefined, // Default undefined
-        apkDownloadURL: undefined, // Default undefined
+        iosAppURL: null, // Default null
+        androidAppURL: null, // Default null
+        chromeExtensionURL: null, // Default null
+        firefoxAddonURL: null, // Default null
+        edgeExtensionURL: null, // Default null
+        safariExtensionURL: null, // Default null
+        linuxPackageURL: null, // Default null
+        windowsStoreURL: null, // Default null
+        macosAppStoreURL: null, // Default null
+        apkDownloadURL: null, // Default null
     },
 
     // ================ Affiliate and API Information ==================
     affiliateAndApiInfo: {
-        apiDocumentationURL: undefined, // Default undefined
-        affiliateResourceURL: undefined, // Default undefined
-        customAffiliateURL: undefined, // Default undefined
+        apiDocumentationURL: null, // Default null
+        affiliateResourceURL: null, // Default null
+        customAffiliateURL: null, // Default null
     },
 };

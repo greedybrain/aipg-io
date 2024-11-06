@@ -7,19 +7,19 @@ const AiToolCardLoading = () => {
         <div className="flex flex-col space-y-3 max-w-[400px] w-full">
             <Skeleton
                 className={cn(
-                    "flex flex-col p-3 h-[525px] w-full bg-white border-2 border-app-tertiary/50 rounded-2xl shadow-neobrut3-loading",
+                    "flex flex-col p-3 w-full bg-white border-4 border-app-tertiary rounded-2xl shadow-neobrut3-loading",
                 )}
             >
-                <Skeleton
+                {/* <Skeleton
                     className={cn(
                         "w-full border-2 border-app-tertiary/50 h-[225px]",
                     )}
-                />
+                /> */}
                 <Group className={cn("mt-4 flex items-center justify-between")}>
                     <Group className={cn("flex items-center gap-x-3")}>
                         <Skeleton
                             className={cn(
-                                "border-2 border-app-tertiary/50 size-[40px] rounded-full",
+                                "border-2 border-app-tertiary/50 size-[65px] rounded-full",
                             )}
                         />
                         <Group>
@@ -51,28 +51,52 @@ const AiToolCardLoading = () => {
                 <Group
                     className={cn("flex-1 mt-5 flex flex-col justify-between")}
                 >
-                    <Group className={cn("space-y-2")}>
+                    <Group className={cn("space-y-2 mt-5")}>
                         <Skeleton
                             className={cn(
-                                "w-full h-[16px] border-2 border-app-tertiary/50",
+                                "w-full h-[20px] border-2 border-app-tertiary/50",
                             )}
                         />
                         <Skeleton
                             className={cn(
-                                "w-full h-[16px] border-2 border-app-tertiary/50",
+                                "w-full h-[20px] border-2 border-app-tertiary/50",
                             )}
                         />
                         <Skeleton
                             className={cn(
-                                "w-full h-[16px] border-2 border-app-tertiary/50",
+                                "w-full h-[20px] border-2 border-app-tertiary/50",
                             )}
                         />
-                        <Skeleton
+                        {/* <Skeleton
                             className={cn(
                                 "w-1/2 h-[16px] border-2 border-app-tertiary/50",
                             )}
-                        />
+                        /> */}
                     </Group>
+                    <ul
+                        className={cn(
+                            "flex flex-wrap gap-y-3 gap-x-2 items-center my-7",
+                        )}
+                    >
+                        {Array.from({ length: 3 }).map((_, idx) => {
+                            return (
+                                <li key={idx}>
+                                    <Skeleton
+                                        className={cn(
+                                            "flex items-center w-[150px]  h-[20px] p-1 border-2 border-app-tertiary/50 gap-x-1",
+                                        )}
+                                    >
+                                        #
+                                        <Skeleton
+                                            className={cn(
+                                                "h-[10px] bg-app-tertiary/50 w-full",
+                                            )}
+                                        />
+                                    </Skeleton>
+                                </li>
+                            );
+                        })}
+                    </ul>
                     <Group className={cn("flex justify-between items-center")}>
                         <Group className={cn("space-y-2")}>
                             <Skeleton

@@ -12,7 +12,7 @@ const AiToolsList = () => {
     return (
         <ul
             className={cn(
-                "mt-14 grid grid-cols-1 justify-items-center sm:grid-cols-2 gap-4 max-w-[790px] mx-auto lg:max-w-[1100px] lg:grid-cols-3",
+                "mt-14 grid grid-cols-1 justify-items-center sm:grid-cols-2 gap-5 max-w-[790px] mx-auto lg:max-w-[1100px] lg:grid-cols-3",
             )}
         >
             {Object.values(aiToolsRecord).map((tool, idx) => (

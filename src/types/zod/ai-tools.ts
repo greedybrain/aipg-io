@@ -35,7 +35,13 @@ const tierSchema = z
         }
     });
 
-const urlSchema = z.string().url("Invalid URL format").nullable().optional();
+const urlSchema = z
+    .string()
+    .nullable()
+    .optional()
+    .refine((val) => !val || z.string().url().safeParse(val).success, {
+        message: "Invalid URL format",
+    });
 
 const platformsEnum = z.enum(["Web-based", "Desktop", "Mobile"]);
 const operatingSystemsEnum = z.enum([
@@ -73,8 +79,7 @@ export const AiToolSchema = z.object({
             .refine((file) => ["image/png", "image/jpeg"].includes(file.type), {
                 message: "Only JPEG AND PNG formats are supported",
                 path: ["logo"],
-            })
-            .optional(),
+            }),
         description: z
             .string()
             .min(
@@ -114,27 +119,24 @@ export const AiToolSchema = z.object({
         promotionDescription: z.string().nullable().default(null),
         tier: tierSchema,
         tiers: z.array(tierSchema),
-        priceInfoURL: z.string().url("Invalid URL format").nullable(),
+        priceInfoURL: urlSchema,
         minPrice: z.string().nullable().default(null),
         maxPrice: z.string().nullable().default(null),
     }),
 
     // ================ Media & Resources ==================
     mediaAndResources: z.object({
-        webImages: z
-            .array(
-                z
-                    .instanceof(File)
-                    .refine((file) => file.size <= 4 * 1024 * 1024, {
-                        message: "Web image must not exceed 4MB",
-                    })
-                    .refine(
-                        (file) =>
-                            ["image/png", "image/jpeg"].includes(file.type),
-                        { message: "Only JPEG AND PNG formats are supported" },
-                    ),
-            )
-            .optional(),
+        webImages: z.array(
+            z
+                .instanceof(File)
+                .refine((file) => file.size <= 4 * 1024 * 1024, {
+                    message: "Web image must not exceed 4MB",
+                })
+                .refine(
+                    (file) => ["image/png", "image/jpeg"].includes(file.type),
+                    { message: "Only JPEG AND PNG formats are supported" },
+                ),
+        ),
         videoURL: z.string().nullable().default(null),
         videoURLs: z.array(z.string()).default([]),
     }),

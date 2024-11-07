@@ -16,7 +16,7 @@ export type TPricingModel = {
     tiers?: TTier[];
     minPrice: string | null;
     maxPrice: string | null;
-    priceInfoURL: string | null;
+    priceInfoURL?: string | null;
     promotionDescription: string | null;
 };
 

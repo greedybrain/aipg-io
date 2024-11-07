@@ -62,7 +62,7 @@ const LogoUploadField = () => {
             </p>
             {logoError && (
                 <p className={cn("text-red-500 mt-2 font-medium")}>
-                    {logoError.message}
+                    {logoError.message as string}
                 </p>
             )}
         </div>

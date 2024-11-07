@@ -13,12 +13,7 @@ const useTierFieldCrud = () => {
     const tiers = methods.watch("pricingInfo.tiers");
 
     const addTier = () => {
-        const foundTier = tiers.find(
-            (thisTier) =>
-                thisTier.name === tier.name ||
-                (!!tier.description &&
-                    thisTier.description === tier.description),
-        );
+        const foundTier = tiers.find((thisTier) => thisTier.name === tier.name);
 
         if (foundTier) {
             notify({
